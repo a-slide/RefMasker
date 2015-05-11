@@ -55,3 +55,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Custom exceptions
+src/RefMasker_conf_file.txt
+
