@@ -22,8 +22,11 @@ try:
     from time import time
     #from datetime import datetime
 
+    # Third party import
+    from Bio import SeqIO # test for Reference class
+
     # Local imports
-    #from pyDNA.FileUtils import is_readable_file, rm_blank
+    from FileUtils import is_readable_file, rm_blank
     from Conf_file import write_example_conf
     from Reference import Reference
     from pyBlast.MakeBlastDB import MakeBlastDB
@@ -37,8 +40,7 @@ except ImportError as E:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class RefMasker(object):
     """
-    Fastq file demultiplexer, handling double indexing, molecular indexing and filtering based
-    on index quality
+
     """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -81,13 +83,13 @@ class RefMasker(object):
             write_example_conf()
             sys.exit(0)
 
-        print("Initialize Quade")
+        print("Initialize RefMasker")
         # Parse the configuration file and verify the values of variables
         try:
 
             # Verify if conf file was given and is valid
             assert conf_file, "A path to the configuration file is mandatory"
-            self._is_readable_file(conf_file)
+            is_readable_file(conf_file)
             self.conf = conf_file
 
             # Define a configuration file parser object and load the configuration file
@@ -124,8 +126,8 @@ class RefMasker(object):
                 # Create Reference objects
                 self.reference_list.append (
                     Reference (
-                        name = self._rm_blank(cp.get(reference, "name"), replace ='_'),
-                        fasta = self._rm_blank(cp.get(reference, "fasta"), replace ='\ ')))
+                        name = rm_blank(cp.get(reference, "name"), replace ='_'),
+                        fasta = rm_blank(cp.get(reference, "fasta"), replace ='\ ')))
 
         # Handle the many possible errors occurring during conf file parsing or variable test
         except (ConfigParser.NoOptionError, ConfigParser.NoSectionError) as E:
@@ -201,16 +203,10 @@ class RefMasker(object):
         print ("Done in {}s".format(round(time()-start_time, 3)))
         return(0)
 
+        # CLEANUP FILES BY CALLING DESTRUCTORS OF CLASSES
+
     #~~~~~~~PRIVATE METHODS~~~~~~~#
 
-    def _is_readable_file (self, fp):
-        """ Verify the readability of a file or list of file """
-        if not access(fp, R_OK):
-            raise IOError ("{} is not a valid file".format(fp))
-
-    def _rm_blank (self, name, replace=""):
-        """ Replace blank spaces in a name by a given character (default = remove)"""
-        return replace.join(name.split())
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #   TOP LEVEL INSTRUCTIONS

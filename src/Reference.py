@@ -10,11 +10,16 @@
 * [Atlantic Gene Therapies - INSERM 1089] (http://www.atlantic-gene-therapies.fr/)
 """
 # Standard library imports
-from os import R_OK, access
-#from pyDNA.FileUtils import is_readable_file
+from os import remove
+from FileUtils import is_readable_file, is_gziped, gunzip_file
+from collections import OrderedDict
+
+# Specific Third party import
+import pyfasta # install with pip
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Reference(object):
+    """ Represent a reference containing several Sequences """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
     #~~~~~~~CLASS FIELDS~~~~~~~#
@@ -30,24 +35,87 @@ class Reference(object):
     #~~~~~~~FUNDAMENTAL METHODS~~~~~~~#
 
     def __init__ (self, name, fasta):
+        """
+        Create a reference object extract fasta ref if needed and create a sequence object per
+        sequences found in the fasta file
+        """
+        print ("Create {} object".format(name))
         # Create self variables
         self.name = name
-        self.fasta = fasta
-        self._test_values()
 
-        ###### UNZIP FASTA IF compressed
-        ###### LOAD FASTA IN A PYTHON OBJECT (Biopython?)
+        # Test values
+        assert self.name not in self.REFERENCE_NAMES, "Reference name <{}> is duplicated".format(self.name)
+        is_readable_file(fasta)
 
-        # Define additional self variables
-        # list of hits found
-        # nb of bp masked
+        # Ungzip Reference file if needed for Blast that can't manage compressed files
+        if is_gziped(fasta):
+            print ("\tUnzip file for blast")
+            self.unziped_fasta = True
+            self.fasta = gunzip_file (fasta)
+        else:
+            self.unziped_fasta = False
+            self.fasta = fasta
+
+        # Loading the fasta sequence in a pyfasta.Fasta (seq_record is a mapping and not a str)
+        print ("\tParsing the file with pyfasta")
+        self.seq_dict = OrderedDict ()
+        fasta_record = pyfasta.Fasta(self.fasta, flatten_inplace=True)
+        print ("\tFound {} sequences in {}".format(len(fasta_record) , self.name))
+
+        for id, seq_record in fasta_record.items():
+            name, sep, descr = id.partition(" ")
+            assert name not in self.seq_dict, "2 sequences with the same name found in {}".format(self.name)
+            self.seq_dict [name] = Sequence(name = name, seq_record = seq_record, descr = descr)
 
         # Add name to a class list
         self.ADD_TO_REFERENCE_NAMES(self.name)
 
-    # Fundamental class methods str and repr
+    def __del__(self):
+        """Destructor to remove the database and unziped fasta files if needed"""
+        print ("Cleaning and De-initializing the Reference \"{}\"".format(self.name))
+        remove (self.fasta+".flat")
+        remove (self.fasta+".gdx")
+        if self.unziped_fasta:
+            remove (self.fasta)
+
     def __str__(self):
-        msg = "REFERENCE CLASS\n\tParameters list\n"
+        msg = "REFERENCE CLASS\tParameters list\n"
+        msg+= "  Name: {}\n".format(self.name)
+        msg+= "  Fasta path: {}\n".format(self.fasta)
+        msg+= "  Fasta unziped: {}\n".format(self.unziped_fasta)
+        msg+= "  Sequences found\n".format(self.unziped_fasta)
+        for s in self.seq_dict.values():
+            msg+= "    Name: {}\tSeq: {}...\tNumber of hits: {}\n".format(
+                s.name, s.seq_record[0:10], len(s.hit_list))
+        return (msg)
+
+    def __repr__(self):
+        return "<Instance of {} from {} >\n".format(self.__class__.__name__, self.__module__)
+
+    #~~~~~~~PUBLIC METHODS~~~~~~~#
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+class Sequence(object):
+    """ Represent a single sequence from a fasta file """
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+    #~~~~~~~FUNDAMENTAL METHODS~~~~~~~#
+
+    def __init__ (self, name, seq_record, descr):
+        """
+        Create a Sequence object that will store
+        """
+        # Create self variables
+        self.name = name
+        self.seq_record = seq_record
+        self.descr =  descr
+
+        # Will be used later to store blast hits
+        self.hit_list = []
+
+    def __str__(self):
+        msg = "SEQUENCE CLASS\tParameters list\n"
         # list all values in object dict in alphabetical order
         keylist = [key for key in self.__dict__.keys()]
         keylist.sort()
@@ -56,16 +124,8 @@ class Reference(object):
         return (msg)
 
     def __repr__(self):
-        #return "<Instance of {} from {} >\n".format(self.__class__.__name__, self.__module__)
-        return self.__str__()
+        return "<Instance of {} from {} >\n".format(self.__class__.__name__, self.__module__)
 
-    #~~~~~~~PRIVATE METHODS~~~~~~~#
-
-    def _test_values(self):
-        assert self.name not in self.REFERENCE_NAMES, "Reference name <{}> is duplicated".format(self.name)
-        self._is_readable_file(self.fasta)
-
-    def _is_readable_file (self, fp):
-        """ Verify the readability of a file or list of file """
-        if not access(fp, R_OK):
-            raise IOError ("{} is not a valid file".format(fp))
+    def __len__ (self):
+        """Support for len method"""
+        return len(self.seq_record)

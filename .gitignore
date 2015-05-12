@@ -58,4 +58,5 @@ target/
 
 # Custom exceptions
 src/RefMasker_conf_file.txt
+*test/
 
