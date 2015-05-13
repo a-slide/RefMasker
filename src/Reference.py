@@ -94,6 +94,17 @@ class Reference(object):
 
     #~~~~~~~PUBLIC METHODS~~~~~~~#
 
+    def add_hit_list (self, hit_list):
+        """Parse a list of BlastHit objects and attibute each of them to its matching Sequence"""
+
+        for hit in hit_list:
+            try:
+                self.seq_dict[hit.s_id].add_hit(hit)
+
+            except KeyError as E:
+                print ("No sequence matching with the hit subject id")
+
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Sequence(object):
@@ -109,7 +120,8 @@ class Sequence(object):
         # Create self variables
         self.name = name
         self.seq_record = seq_record
-        self.descr =  descr
+        self.descr = descr
+        self.length = len(self.seq_record)
 
         # Will be used later to store blast hits
         self.hit_list = []
@@ -129,3 +141,15 @@ class Sequence(object):
     def __len__ (self):
         """Support for len method"""
         return len(self.seq_record)
+
+    #~~~~~~~PUBLIC METHODS~~~~~~~#
+
+    def add_hit (self, hit):
+        """Parse a list of BlastHit objects and attibute each of them to its matching Sequence"""
+
+        if hit.s_start <= self.length and hit.s_end <= self.length
+            self.hit_list.append(hit)
+            # Transform hit so that both q orient and s_orient are positive
+
+        else:
+            print ("Invalid hit: Outside of sequence \"{}\" borders".format(self.name))
