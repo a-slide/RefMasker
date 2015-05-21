@@ -17,6 +17,9 @@ from collections import OrderedDict
 # Specific Third party import
 import pyfasta # install with pip
 
+# Local imports
+from Sequence import Sequence
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Reference(object):
     """ Represent a reference containing several Sequences """
@@ -103,53 +106,3 @@ class Reference(object):
 
             except KeyError as E:
                 print ("No sequence matching with the hit subject id")
-
-
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-class Sequence(object):
-    """ Represent a single sequence from a fasta file """
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-    #~~~~~~~FUNDAMENTAL METHODS~~~~~~~#
-
-    def __init__ (self, name, seq_record, descr):
-        """
-        Create a Sequence object that will store
-        """
-        # Create self variables
-        self.name = name
-        self.seq_record = seq_record
-        self.descr = descr
-        self.length = len(self.seq_record)
-
-        # Will be used later to store blast hits
-        self.hit_list = []
-
-    def __str__(self):
-        msg = "SEQUENCE CLASS\tParameters list\n"
-        # list all values in object dict in alphabetical order
-        keylist = [key for key in self.__dict__.keys()]
-        keylist.sort()
-        for key in keylist:
-            msg+="\t{}\t{}\n".format(key, self.__dict__[key])
-        return (msg)
-
-    def __repr__(self):
-        return "<Instance of {} from {} >\n".format(self.__class__.__name__, self.__module__)
-
-    def __len__ (self):
-        """Support for len method"""
-        return len(self.seq_record)
-
-    #~~~~~~~PUBLIC METHODS~~~~~~~#
-
-    def add_hit (self, hit):
-        """Parse a list of BlastHit objects and attibute each of them to its matching Sequence"""
-
-        if hit.s_start <= self.length and hit.s_end <= self.length
-            self.hit_list.append(hit)
-            # Transform hit so that both q orient and s_orient are positive
-
-        else:
-            print ("Invalid hit: Outside of sequence \"{}\" borders".format(self.name))
