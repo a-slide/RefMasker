@@ -71,14 +71,14 @@ class Sequence(object):
 
         # If only the query strand is reverse = reverse the query coordinates and make
         # the reverse complement of the query sequence
-        elif not hit.s_orient
+        elif not hit.s_orient:
             hit.q_start, hit.q_end = hit.q_end, hit.q_start
             hit.q_seq = self._reverse_complement(hit.q_seq)
             self.hit_list.append(hit)
 
         # If the reverse strand of the hit is aligned on the reverse strand of the subject
         # reverse the coordinates of the sequence but does not modify the query sequence
-        else
+        else:
             it.s_start, hit.s_end = hit.s_end, hit.s_start
             it.q_start, hit.q_end = hit.q_end, hit.q_start
             self.hit_list.append(hit)
@@ -86,14 +86,14 @@ class Sequence(object):
     #~~~~~~~PRIVATE METHODS~~~~~~~#
 
     def _DNA_reverse_comp (self, sequence):
-    """
-    Generate the reverese complementary sequence of a given DNA sequence
-    @param sequence DNA sequence
-    @return Reverse complement of the sequence
-    """
-    rc = ""
-    for base in sequence[::-1]:
-        # Return the complement of a base except if an illegal character is found (such as - or .)
-        rc += self.DNA_COMPLEMENT.get(base, "")
+        """
+        Generate the reverese complementary sequence of a given DNA sequence
+        @param sequence DNA sequence
+        @return Reverse complement of the sequence
+        """
+        rc = ""
+        for base in sequence[::-1]:
+            # Return the complement of a base except if an illegal character is found (such as - or .)
+            rc += self.DNA_COMPLEMENT.get(base, "")
 
-    return rc
+        return rc
