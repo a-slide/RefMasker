@@ -13,6 +13,7 @@
 from os import remove
 from FileUtils import is_readable_file, is_gziped, gunzip_file
 from collections import OrderedDict
+from gzip import open as gopen
 
 # Specific Third party import
 import pyfasta # install with pip
@@ -73,7 +74,7 @@ class Reference(object):
         # Add name to a class list
         self.ADD_TO_REFERENCE_NAMES(self.name)
 
-    def __del__(self):
+    def __del__(self): ############################################################################ DOESN'T WORK
         """Destructor to remove the database and unziped fasta files if needed"""
         print ("Cleaning and De-initializing the Reference \"{}\"".format(self.name))
         remove (self.fasta+".flat")
@@ -106,3 +107,19 @@ class Reference(object):
 
             except KeyError as E:
                 print ("No sequence matching with the hit subject id")
+
+    def output_masked_reference (self):
+
+        # Count the number of hit in all Sequence objects from the Reference
+        n_hit = 0
+        for sequence in self.seq_dict.values():
+            n_hit += sequence.n_hit
+
+        if not n_hit:
+            print ("No hit found in all sequence from the reference {}".format(self.name))
+            return None
+
+        # Else = write a new reference in the current folder
+        with gopen ("{}_modified.fa.gz".format(self.name), "wb") as fasta:
+            for seq in self.seq_dict.values():
+                fasta.write("{}_{}\n{}\n".format(seq.name, seq.descr, seq.output_masked_sequence()))
