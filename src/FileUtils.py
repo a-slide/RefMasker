@@ -13,15 +13,15 @@
 """
 
 # Standard library imports
-from os import access, R_OK, remove, path
+from os import access, R_OK, path
 from gzip import open as gopen
+from shutil import copy
 
 #~~~~~~~ PREDICATES ~~~~~~~#
 
 def is_readable_file (fp):
     """ Verify the readability of a file or list of file """
-    if not access(fp, R_OK):
-        raise IOError ("{} is not a valid file".format(fp))
+    return access(fp, R_OK)
 
 def is_gziped (fp):
     """ Return True if the file is Gziped else False """
@@ -56,28 +56,36 @@ def rm_blank (name, replace=""):
 
 #~~~~~~~ FILE MANIPULATION ~~~~~~~#
 
-def gunzip_file (in_path):
+def gunzip (src, dst):
     """
-    @param in_path Path of the input compressed file
-    @param out_path Path of the output uncompressed file (facultative)
-    @exception  OSError Can be raise by open
+    @param source Path of the input compressed file
+    @param destination Path to a directory or a file where source will be extracted. If destination
+    is a directory, the file will be extracted into and automatically renamed.
+    @return The path of the destination file
     """
-    # Generate a automatic name without .gz extension
-    out_path = file_basepath(in_path)
+    # Generate a automatic name without .gz extension in the directory
+    if path.isdir(dst):
+        dst = path.join(dst, file_name(src.rstrip(".gz")))
 
-    try:
-        # Try to initialize handle for
-        with gopen(in_path, 'rb') as in_handle:
-            with open(out_path, "wb") as out_handle:
-            # Write input file in output file
-                out_handle.write (in_handle.read())
+    # Try to initialize handle for the compressed file
+    with gopen(src, 'rb') as in_handle:
+        with open(dst, "wb") as out_handle:
+        # Write input file in output file
+            out_handle.write (in_handle.read())
 
-        return path.abspath(out_path)
+    return dst
 
-    except IOError as E:
-        print(E)
-        if path.isfile (out_path):
-            try:
-                remove (out_path)
-            except OSError:
-                print "Can't remove {}".format(out_path)
+def cp (src, dst):
+    """
+    @param source Path of the input file
+    @param destination Path to a directory or a file where source will be copied. If destination
+    is a directory, the file will be copied into and automatically renamed.
+    @return The path of the destination file
+    """
+    # Generate a automatic name in the directory from the source file name
+    if path.isdir(dst):
+        dst = path.join(dst, file_name(src))
+
+    copy(src, dst)
+
+    return dst

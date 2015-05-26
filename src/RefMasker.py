@@ -89,7 +89,7 @@ class RefMasker(object):
 
             # Verify if conf file was given and is valid
             assert conf_file, "A path to the configuration file is mandatory"
-            is_readable_file(conf_file)
+            assert is_readable_file(conf_file), "{} is not a valid file".format(conf_file)
             self.conf = conf_file
 
             # Define a configuration file parser object and load the configuration file
