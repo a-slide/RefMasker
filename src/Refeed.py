@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-@package    RefMasker
+@package    Refeed
 @brief      Main file of the program
 @copyright  [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html)
 @author     Adrien Leger - 2015
@@ -23,14 +23,14 @@ try:
     #from datetime import datetime
 
     # Third party import
-    from Bio import SeqIO # test for Reference class
+    import pyfasta # mandatory for fasta reading in the reference class
 
     # Local imports
     from FileUtils import is_readable_file, rm_blank
     from Conf_file import write_example_conf
     from Reference import Reference
-    from pyBlast.MakeBlastDB import MakeBlastDB
-    from pyBlast.MakeBlastn import MakeBlastn
+    from pyBlast.BlastHit import BlastHit
+    from pyBlast.Blastn import Blastn
 
 except ImportError as E:
     print (E)
@@ -38,7 +38,7 @@ except ImportError as E:
     exit()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-class RefMasker(object):
+class Refeed(object):
     """
 
     """
@@ -46,7 +46,7 @@ class RefMasker(object):
 
     #~~~~~~~CLASS FIELDS~~~~~~~#
 
-    VERSION = "RefMasker 0.1"
+    VERSION = "Refeed 0.1"
     USAGE = "Usage: %prog -c Conf.txt [-i -h]"
 
     #~~~~~~~CLASS METHODS~~~~~~~#
@@ -67,7 +67,7 @@ class RefMasker(object):
         # Parse arguments
         options, args = optparser.parse_args()
 
-        return RefMasker(options.conf_file, options.init_conf)
+        return Refeed(options.conf_file, options.init_conf)
 
     #~~~~~~~FONDAMENTAL METHODS~~~~~~~#
 
@@ -83,7 +83,7 @@ class RefMasker(object):
             write_example_conf()
             sys.exit(0)
 
-        print("Initialize RefMasker")
+        print("Initialize Refeed")
         # Parse the configuration file and verify the values of variables
         try:
 
@@ -96,27 +96,22 @@ class RefMasker(object):
             cp = ConfigParser.RawConfigParser(allow_no_value=True)
             cp.read(self.conf)
 
-            print("\tParse Blast options")
-            # Blast parameters section
-            self.blastn_opt = cp.get("Blast", "blastn_opt")
-            self.blast_task = cp.get("Blast", "blast_task")
-            self.best_per_query_seq = cp.get("Blast", "best_per_query_seq")
-            self.evalue = cp.getfloat("Blast", "evalue")
-
-            assert self.evalue > 0, "Authorized values for evalue: float > 0"
-
-            self.mkblastdb_opt= cp.get("Blast", "mkblastdb_opt")
-            self.blastn = cp.get("Blast", "blastn")
-            self.mkblastdb = cp.get("Blast", "mkblastdb")
-
             print("\tParse output options")
             # Output parameters section
-
-            self.repl_char = cp.get("Output", "repl_char")
-            self.repl_with_query = cp.getboolean("Output", "repl_with_query")
-            self.modif_seq_only = cp.getboolean("Output", "modif_seq_only")
-            self.merge_ref = cp.getboolean("Output", "merge_ref")
+            self.mask_homologies = cp.getboolean("Output", "mask_homologies")
+            self.replace_homologies = cp.getboolean("Output", "replace_homologies")
             self.compress_output = cp.getboolean("Output", "compress_output")
+            assert self.mask_homologies != self.replace_homologies, \
+            "mask_homologies and replace_homologies ar incompatible"
+
+            print("\tParse Blast options")
+            # Blast parameters section
+            self.blastn_exec = cp.get("Blast", "blastn_exec")
+            self.makeblastdb_exec = cp.get("Blast", "makeblastdb_exec")
+            self.blast_task = cp.get("Blast", "blast_task")
+            self.best_query_hit = cp.get("Blast", "best_query_hit")
+            self.evalue = cp.getfloat("Blast", "evalue")
+            assert self.evalue > 0, "Authorized values for evalue: float > 0"
 
             print("\tParse Reference sequences")
             # Iterate only on sections starting by "reference", create Reference objects
@@ -127,7 +122,8 @@ class RefMasker(object):
                 self.reference_list.append (
                     Reference (
                         name = rm_blank(cp.get(reference, "name"), replace ='_'),
-                        fasta = rm_blank(cp.get(reference, "fasta"), replace ='\ ')))
+                        fasta = rm_blank(cp.get(reference, "fasta"), replace ='\ '),
+                        masking = self.mask_homologies))
 
         # Handle the many possible errors occurring during conf file parsing or variable test
         except (ConfigParser.NoOptionError, ConfigParser.NoSectionError) as E:
@@ -143,7 +139,7 @@ class RefMasker(object):
             sys.exit(1)
 
     def __str__(self):
-        msg = "RefMasker CLASS\n\tParameters list\n"
+        msg = "Refeed CLASS\n\tParameters list\n"
         # list all values in object dict in alphabetical order
         keylist = [key for key in self.__dict__.keys()]
         keylist.sort()
@@ -163,47 +159,55 @@ class RefMasker(object):
         forth until there is only 1 reference remaining
         """
         start_time = time()
-
         print ("Start to process files")
         # Iterate over index in Reference.instances staring by the last one until the 2nd one
-        for i in range(len(self.reference_list)-1, 0, -1):
-            subject = self.reference_list[i]
-            query_list = self.reference_list[0:i]
 
-            print ("Processing Reference {}".format(subject.name)
-            hit_list = []
+        try:
+            for i in range(len(self.reference_list)-1, 0, -1):
+                subject = self.reference_list[i]
+                query_list = self.reference_list[0:i]
 
-            # Create a MakeBlastDB object of nucl type and fasta input (default)
-            dbmaker = MakeBlastDB (
-                makeblastdb = self.mkblastdb,
-                makeblastdb_opt = self.makeblastdb_opt
+                print ("Processing Reference {}".format(subject.name))
 
-            # Create the blast database
-            subject_db = dbmaker(ref_path = subject.fasta, db_path = subject.name)
+                # Create a blast database for the current subject sequence
+                with Blastn(ref_path=subject.fasta, makeblastdb_exec=self.makeblastdb_exec) as blastn:
 
-            # Init a MakeBlast object of blastn type (default)
-            blaster = MakeBlastn (
-                blastn_opt = self.mkblastdb_opt,
-                blastn = self.mkblast
-                task=self.blast_task
-                evalue = self.evalue
-                best_per_query_seq = self.best_per_query_seq)
+                    # Blast each query file of the query list against the subject
+                    for query in query_list:
+                        print ("Blast {} against {} database".format(query.name, subject.name))
 
-            # Blast each query in query list against the subject database
-            for query in query_list:
-                print ("Blast {} against {} database".format(query.name, subject.name)
-                hit_list = blaster(query_path = query.fasta, db_path = self.makeblastdb_opt)
-                ########## subject.add_hits(hit_list)
+                        # Save the list of hit in a local variable
+                        hit_list = blastn (
+                            query_path = query.fasta,
+                            blastn_exec = self.blastn_exec,
+                            task = self.blast_task,
+                            evalue = self.evalue,
+                            best_query_hit = self.best_query_hit) ################################################################ ERROR
 
-            # Remove DB files at the and of the blast against all queries
-            dbmaker.remove_db_files()
+                        # Add the hit of list found to the subject
+                        if hit_list:
+                            subject.add_hit_list(hit_list)
 
-        # Write a report
-        print ("Generate_a csv report")
-        print ("Done in {}s".format(round(time()-start_time, 3)))
-        return(0)
+                    # if hits were found output the new fasta file in the current folder
+                    subject.output_reference (compress=self.compress_output)
 
-        # CLEANUP FILES BY CALLING DESTRUCTORS OF CLASSES
+        # Catch possible exceptions
+        except Exception as E:
+            print ("Error during execution of Refeed")
+            print (E.message)
+            print ("Generate a report and exit\n")
+
+        # Even in case of exception this block will always be executed
+        finally:
+            # Write a report
+            print ("Generate_a csv report")
+
+            for ref in self.reference_list:
+                ref.get_report()
+                ref.clean()
+
+            print ("Done in {}s".format(round(time()-start_time, 3)))
+            return(0)
 
     #~~~~~~~PRIVATE METHODS~~~~~~~#
 
@@ -214,141 +218,5 @@ class RefMasker(object):
 
 if __name__ == '__main__':
 
-    refmasker = RefMasker.class_init()
-    refmasker()
-
-
-## Standard library packages import
-#from os import remove, path
-#import gzip
-#from time import time
-#from sys import stdout
-
-## Third party package import
-#from Bio import SeqIO
-
-## Local library packages import
-#from pyDNA.Utilities import import_seq, file_basename, mkdir
-#from Blast import Blastn
-
-##~~~~~~~MAIN METHODS~~~~~~~#
-
-#def _iterative_masker (self): #### TODO The fuction directly manipulate reference field= change that
-    #"""
-    #Mask references homologies iteratively, starting by the last reference which is masked by
-    #all the others then to the penultimate masked by all others except the last and and so
-    #forth until there is only 1 reference remaining
-    #"""
-    ## Iterate over index in Reference.instances staring by the last one until the 2nd one
-    #for i in range(Reference.countInstances()-1, 0, -1):
-
-        ## Extract subject and query_list from ref_list
-        #subject = Reference.Instances[i]
-        #query_list = Reference.Instances[0:i]
-        #print ("\n# PROCESSING REFERENCE {} #\n".format(subject.name))
-
-        ## Perform a blast of query list against subject
-        #hit_list = Blastn.align (
-            #query_list = [ref.ref_fasta for ref in query_list],
-            #subject_fasta = subject.ref_fasta,
-            #align_opt = self.blastn_opt,
-            #db_opt = self.mkblastdb_opt,
-            #db_outdir = self.db_dir,
-            #db_outname = subject.name)
-
-        ## Masking hits in suject fasta if hits in hit_list
-        #subject.ref_fasta = mask (
-            #subject_fasta= subject.ref_fasta,
-            #hit_list = hit_list,
-            #ref_outdir = self.ref_dir,
-            #ref_outname = "masked_{}.fa".format(subject.name),
-            #compress_ouput = False)
-
-
-#def mask (  subject_fasta,
-            #hit_list,
-            #ref_outdir="./references/",
-            #ref_outname="masked_ref.fa",
-            #compress_ouput=True ):
-    #"""
-    #Import a reference fasta sequence, Mask positions indicated by hits from a hit_list and write
-    #the modified fasta sequence in a new file.
-    #@param subject_fasta Fasta sequence of the subject to edit (can be gzipped)
-    #@param hit_list List of hit objects. Hits need at least 3 fields named s_id, s_start and s_end
-    #coresponding to the name of the sequence matched, and the hit start/end (0 based).
-    #@param ref_outdir Directory where the masked reference will be created
-    #@param ref_outname Name of the masked reference
-    #@param compress_ouput If true the output will be gzipped
-    #@return A path to the modified sequence if the hit list was valid.
-    #"""
-
-    ## Test if object the first object of hit_list have the require s_id, s_start and s_end fields
-    #try:
-        #a = hit_list[0].s_id
-        #a = hit_list[0].s_start
-        #a = hit_list[0].s_end
-
-    #except IndexError:
-        #print ("No hit found, The subject fasta file will not be edited")
-        #return subject_fasta
-    #except AttributeError as E:
-        #print ("The list provided does not contain suitable hit object, The subject fasta file will not be edited")
-        #return subject_fasta
-
-    ## Initialize output folder
-    #mkdir(ref_outdir)
-
-    ## Initialize input fasta file
-    #if subject_fasta[-2:].lower() == "gz":
-        #in_handle = gzip.open(subject_fasta, "r")
-    #else:
-        #in_handle = open(subject_fasta, "r")
-
-    ## Initialize output fasta file
-    #if compress_ouput:
-        #ref_path = path.join (ref_outdir, ref_outname+".gz")
-        #out_handle = gzip.open(ref_path, 'w')
-    #else:
-        #ref_path = path.join (ref_outdir, ref_outname)
-        #out_handle = open(ref_path, 'w')
-
-    ## Generate a list of ref that will need to be modified
-    #id_list = {hit.s_id:0 for hit in hit_list}.keys()
-
-    ## Iterate over record in the subject fasta file
-    #print ("Masking hit positions and writting a new reference for {} ".format(ref_outname))
-    #i=j=0
-    #start_time = time()
-    #for record in SeqIO.parse(in_handle, "fasta"):
-        ## Progress Marker
-        #stdout.write("*")
-        #stdout.flush()
-
-        ## Check if the record is in the list of record to modify
-        #if record.id in id_list:
-            #i+=1
-            ##~print ("Hit found in {}. Editing the sequence".format(record.id))
-            ## Casting Seq type to MutableSeq Type to allow string editing
-            #record.seq = record.seq.tomutable()
-
-            ## For each hit in the list of hit found
-            #for hit in hit_list:
-                #if record.id == hit.s_id:
-
-                    ## For all position between start and end coordinates modify the base by N
-                    #for position in range (hit.s_start, hit.s_end):
-                        #record.seq[position]= 'n'
-        #else:
-            #j+=1
-            ##~print ("No hit found in {}".format(record.id))
-
-        ## Finally write the sequence modified or not
-        #out_handle.write(record.format("fasta"))
-    #print("")
-    ## Report informations
-    #print("{} sequence(s) from {} modified in {}s".format(i,ref_outname, round(time()-start_time),2))
-
-    ## Close files and return the masked ref path
-    #in_handle.close()
-    #out_handle.close()
-    #return ref_path
+    refeed = Refeed.class_init()
+    refeed()

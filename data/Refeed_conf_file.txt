@@ -1,21 +1,4 @@
-# -*- coding: utf-8 -*-
 
-"""
-@package    Refeed
-@brief      Contain the template of the empty configuration file for Refeed
-@copyright  [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html)
-@author     Adrien Leger - 2014
-* <adrien.leger@gmail.com>
-* <adrien.leger@inserm.fr>
-* <adrien.leger@univ-nantes.fr>
-* [Github](https://github.com/a-slide)
-* [Atlantic Gene Therapies - INSERM 1089] (http://www.atlantic-gene-therapies.fr/)
-"""
-
-def write_example_conf():
-
-    with open ("Refeed_conf_file.txt", 'wb') as fp:
-        fp.write ("""
 ###################################################################################################
 #                                   REFEED CONFIGURATION FILE                                      #
 ###################################################################################################
@@ -97,4 +80,3 @@ fasta : ref4.fa.gz
 name : ref5
 fasta : ref5.fa.gz
 
-""")
