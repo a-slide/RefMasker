@@ -1,11 +1,15 @@
-# RefMasker
-Mask homologies in fasta reference sequences based on an user provided ranking (IN DEVELOPMENT)
+# Refeed
+Mask or replace homologies in fasta reference sequences based on an user provided ranking 
+
+**IN DEVELOPMENT**
 
 The order of references is CRITICAL if you want to perform a reference masking by the last reference masked by all the others then the penultimate masked by all others except the last and and so on until there is only one reference remaining
 
-@brief **Wrapper for Blastn from NCBI Blast**
+**Wrapper for Blastn from NCBI Blast**
 Please see the Blast+ user manual document for further details
+
 [MANUAL](http://www.ncbi.nlm.nih.gov/books/NBK1762/)
+
 Basically the top level function Blastn.align processes sequences as follow:
 
 * If a blastn database is provided it will attempt to validate it by creating and MakeblastdbWrapper.ExistingDB object.

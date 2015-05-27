@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-@package    RefMasker
-@brief      Helper class for RefMasker to represent References
+@package    Refeed
+@brief      Helper class for Refeed to represent References
 @copyright  [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html)
 @author     Adrien Leger - 2014
 * <adrien.leger@gmail.com> <adrien.leger@inserm.fr> <adrien.leger@univ-nantes.fr>
@@ -21,11 +21,15 @@ import pyfasta # install with pip
 
 # Local imports
 from FileUtils import is_readable_file, is_gziped, gunzip, cp
-from Sequence import Sequence
+from Sequence import Sequence, Sequence_with_masker, Sequence_with_replacer
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Reference(object):
-    """ Represent a reference fasta file containing several Sequences """
+    """
+    Represent a reference fasta file containing several sequences. Use with the context manager
+    to remove temporary files generated during the the parsing and indexation of the fasta
+    sequence. Alternatively, the clean method can be called at the end of the object usage
+    """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
     #~~~~~~~CLASS FIELDS~~~~~~~#
@@ -44,10 +48,16 @@ class Reference(object):
 
     #~~~~~~~FUNDAMENTAL METHODS~~~~~~~#
 
-    def __init__ (self, name, fasta):
+    def __init__ (self, name, fasta, masking=True):
         """
         Create a reference object extract fasta ref if needed and create a sequence object per
         sequences found in the fasta file
+        @param name     Name of the Reference
+        @param fasta    Path to a fasta file (can be gzipped)
+        @param masking  Will create a Sequence object with the ability to output a sequence where
+        areas of the sequence overlapping hits will be masked.
+        if True. If not the Sequence object will have the ability to replace the original sequence
+        with the hit sequences
         """
         print ("Create {} object".format(name))
         # Create self variables
@@ -75,10 +85,14 @@ class Reference(object):
             fasta_record = pyfasta.Fasta(self.fasta, flatten_inplace=True)
             print ("\tFound {} sequences in {}".format(len(fasta_record) , self.name))
 
-            for id, seq_record in fasta_record.items():
-                seq_name, sep, descr = id.partition(" ")
+            for seq_name, seq_record in fasta_record.items():
                 assert seq_name not in self.seq_dict, "Reference name <{}> is duplicated in <{}>".format(seq_name,self.name)
-                self.seq_dict [seq_name] = Sequence(name=seq_name, seq_record=seq_record, descr=descr)
+
+                # Define a Sequence object depending of the type of output required
+                if masking:
+                    self.seq_dict[seq_name] = Sequence_with_masker(name=seq_name, seq_record=seq_record)
+                else:
+                    self.seq_dict[seq_name] = Sequence_with_replacer(name=seq_name, seq_record=seq_record)
 
             # Add name to a class list
             self.ADD_TO_REFERENCE_NAMES(self.name)
@@ -128,7 +142,10 @@ class Reference(object):
     #~~~~~~~PUBLIC METHODS~~~~~~~#
 
     def add_hit_list (self, hit_list):
-        """Parse a list of BlastHit objects and attibute each of them to its matching Sequence"""
+        """
+        Parse a list of BlastHit objects and attibute each of them to its matching Sequence
+        @param hit_list A list of BlastHit objects
+        """
 
         for hit in hit_list:
             try:
@@ -136,18 +153,43 @@ class Reference(object):
             except KeyError as E:
                 print ("No sequence matching with the hit subject id")
 
-    def output_masked_reference (self):
-
+    def output_reference (self, compress=True):
+        """
+        Output a reference corresponding to the original sequenced but masked with a masking
+        character for bases overlapped by a BlastHit.
+        @param compress Compress the output fasta file
+        @param masking_char Character that will be used to mask hits
+        """
         # Count the number of hit in all Sequence objects from the Reference
         if not self.n_hit:
-            print ("No hit found in all sequence from the reference {}".format(self.name))
-            return None
+            print ("No hit found in all sequence of the reference {}".format(self.name))
+            fasta_path = None
 
-        # Else = write a new reference in the current folder
-        with gopen ("{}_modified.fa.gz".format(self.name), "wb") as fasta:
-            for seq in self.seq_dict.values():
-                fasta.write("{}_{}\n{}\n".format(seq.name, seq.descr, seq.output_masked_sequence()))
+        # Write a new compressed reference in the current folder
+        elif compress:
+            fasta_path = "{}_modified.fa.gz".format(self.name)
+            with gopen (fasta_path, "wb") as fasta:
+                for seq in self.seq_dict.values():
+                    # Write the sequence in the fasta file
+                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
+
+        # Write a new uncompressed reference in the current folder
+        else:
+            fasta_path = "{}_modified.fa".format(self.name)
+            with open (fasta_path, "w") as fasta:
+                for seq in self.seq_dict.values():
+                    # Write the sequence in the fasta file
+                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
+
+        return fasta_path
+
+    def get_report (self):
+        """Generate a report under the form of a list"""
+        pass
 
     def clean (self):
         print ("Cleaning up temporary files for the reference \"{}\"".format(self.name))
+        # Remove the temporary directory containing files generated during program execution
         rmtree(self.temp_dir)
+        # Cleanup the self dictionary
+        self.__dict__ = {}
