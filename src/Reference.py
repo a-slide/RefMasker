@@ -48,7 +48,7 @@ class Reference(object):
 
     #~~~~~~~FUNDAMENTAL METHODS~~~~~~~#
 
-    def __init__ (self, name, fasta, masking=True):
+    def __init__ (self, name, fasta, masking=True, compress=True):
         """
         Create a reference object extract fasta ref if needed and create a sequence object per
         sequences found in the fasta file
@@ -63,6 +63,14 @@ class Reference(object):
         # Create self variables
         self.name = name
         self.temp_dir = mkdtemp()
+        self.masking = masking
+        self.compress = compress
+
+        # Create a name for the fasta file to be generated
+        self.modified_fasta = "{}{}.fa{}".format(
+            self.name,
+            "_masked" if self.masking else "_replaced",
+            ".gz" if self.compress else "")
 
         try:
             # Test values
@@ -73,26 +81,32 @@ class Reference(object):
             # in the temporary folder
 
             if is_gziped(fasta):
-                print ("\tUnzip fasta file in a temporary directory")
+                print (" * Unzip fasta file in a temporary directory")
                 self.fasta = gunzip(fasta, self.temp_dir)
             else:
-                print ("\tCopy fasta file in a temporary directory")
+                print (" * Copy fasta file in a temporary directory")
                 self.fasta = cp(fasta, self.temp_dir)
 
             # Loading the fasta sequence in a pyfasta.Fasta (seq_record is a mapping and not a str)
-            print ("\tParsing the file with pyfasta")
-            self.seq_dict = OrderedDict ()
+            print (" * Parsing the file with pyfasta")
+            seq_dict = {}
             fasta_record = pyfasta.Fasta(self.fasta, flatten_inplace=True)
-            print ("\tFound {} sequences in {}".format(len(fasta_record) , self.name))
+            print (" * Found {} sequences in {}".format(len(fasta_record) , self.name))
 
-            for seq_name, seq_record in fasta_record.items():
-                assert seq_name not in self.seq_dict, "Reference name <{}> is duplicated in <{}>".format(seq_name,self.name)
+            for name, seq_record in fasta_record.items():
+
+                # Remove additional sequence descriptor in fasta headear
+                short_name = name.partition(" ")[0]
+                assert short_name not in seq_dict, "Reference name <{}> is duplicated in <{}>".format(short_name,self.name)
 
                 # Define a Sequence object depending of the type of output required
-                if masking:
-                    self.seq_dict[seq_name] = Sequence_with_masker(name=seq_name, seq_record=seq_record)
+                if self.masking:
+                    seq_dict[short_name] = Sequence_with_masker(name=short_name, seq_record=seq_record)
                 else:
-                    self.seq_dict[seq_name] = Sequence_with_replacer(name=seq_name, seq_record=seq_record)
+                    seq_dict[short_name] = Sequence_with_replacer(name=short_name, seq_record=seq_record)
+
+            # Add save to a name sorted ordered dict
+            self.seq_dict = OrderedDict(sorted(seq_dict.items(), key=lambda x: x))
 
             # Add name to a class list
             self.ADD_TO_REFERENCE_NAMES(self.name)
@@ -153,7 +167,7 @@ class Reference(object):
             except KeyError as E:
                 print ("No sequence matching with the hit subject id")
 
-    def output_reference (self, compress=True):
+    def output_reference (self):
         """
         Output a reference corresponding to the original sequenced but masked with a masking
         character for bases overlapped by a BlastHit.
@@ -162,33 +176,49 @@ class Reference(object):
         """
         # Count the number of hit in all Sequence objects from the Reference
         if not self.n_hit:
-            print ("No hit found in all sequence of the reference {}".format(self.name))
-            fasta_path = None
+            self.modified_fasta = None
+            return None
 
         # Write a new compressed reference in the current folder
-        elif compress:
-            fasta_path = "{}_modified.fa.gz".format(self.name)
-            with gopen (fasta_path, "wb") as fasta:
+        elif self.compress:
+            with gopen (self.modified_fasta, "wb") as fasta:
                 for seq in self.seq_dict.values():
                     # Write the sequence in the fasta file
                     fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
+            return self.modified_fasta
 
         # Write a new uncompressed reference in the current folder
         else:
-            fasta_path = "{}_modified.fa".format(self.name)
-            with open (fasta_path, "w") as fasta:
+            with open (self.modified_fasta, "w") as fasta:
                 for seq in self.seq_dict.values():
                     # Write the sequence in the fasta file
                     fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
+            return self.modified_fasta
 
-        return fasta_path
+    def get_report (self, full=False):
+        """
+        Generate a report under the form of an Ordered dictionary
+        @param full If true a dict containing all self parameters will be returned
+        """
+        report = OrderedDict ()
+        report["Reference Name"] = self.name
+        report["Number of sequences"] = self.n_seq
+        report["Number of hit(s)"] = self.n_hit
 
-    def get_report (self):
-        """Generate a report under the form of a list"""
-        pass
+        # Include in report only if hit where found in the reference
+        if self.n_hit:
+            report["Number of base(s) modified"] = sum([seq.mod_bases for seq in self.seq_dict.values()])
+            report["Modified fasta"] = self.modified_fasta
+            report["Modified Sequences"] = OrderedDict ()
+            for seq in self.seq_dict.values():
+                if seq.hit_list:
+                    report["Modified Sequences"][seq.name] = seq.get_report(full=full)
+
+        return report
+
 
     def clean (self):
-        print ("Cleaning up temporary files for the reference \"{}\"".format(self.name))
+        print (" * Cleaning up temporary files for the reference \"{}\"".format(self.name))
         # Remove the temporary directory containing files generated during program execution
         rmtree(self.temp_dir)
         # Cleanup the self dictionary

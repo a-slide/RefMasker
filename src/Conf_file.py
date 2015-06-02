@@ -29,6 +29,12 @@ def write_example_conf():
 
 # Define the output options
 
+# Output a simple and summary csv report at the end of execution
+summary_report = True
+
+# Output a detailed report including all blast hit coordinates and evalue
+detailed_report = True
+
 # Replace homologies in the reference with the query sequence instead of masking with "N"
 # (incompatible with replace_homologies)(BOOLEAN)
 mask_homologies : True
@@ -59,7 +65,7 @@ best_query_hit : False
 evalue : 0.1
 
 # type of blast algorithm to perform 'blastn', 'blastn-short', 'dc-megablast', 'megablast',
-# 'rmblastn'. Default = megablast
+# 'rmblastn'. Default = dc-megablast
 blast_task = dc-megablast
 
 ###################################################################################################
@@ -79,22 +85,22 @@ blast_task = dc-megablast
 
 [reference1]
 name : ref1
-fasta : ref1.fa.gz
+fasta : ../dataset/ref1.fa.gz
 
 [reference2]
 name : ref2
-fasta : ref2.fa.gz
+fasta : ../dataset/ref2.fa.gz
 
 [reference3]
 name : ref3
-fasta : ref3.fa.gz
+fasta : ../dataset/ref3.fa.gz
 
 [reference4]
 name : ref4
-fasta : ref4.fa.gz
+fasta : ../dataset/ref4.fa.gz
 
 [reference5]
 name : ref5
-fasta : ref5.fa.gz
+fasta : ../dataset/ref5.fa.gz
 
 """)

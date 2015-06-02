@@ -1,0 +1,43 @@
+Program Refeed 0.1	Date 2015-06-02 13:48:22.217744
+
+Reference Name	ref1
+Number of sequences	2
+Number of hit(s)	0
+
+Reference Name	ref2
+Number of sequences	3
+Number of hit(s)	6
+Number of base(s) modified	1087
+Modified fasta	ref2_masked.fa.gz
+Modified Sequences
+	seq2.1
+		Number of hits	4
+		Number of base modified	920
+	seq2.3
+		Number of hits	2
+		Number of base modified	167
+
+Reference Name	ref3
+Number of sequences	2
+Number of hit(s)	0
+
+Reference Name	ref4
+Number of sequences	5
+Number of hit(s)	3
+Number of base(s) modified	1741
+Modified fasta	ref4_masked.fa.gz
+Modified Sequences
+	seq4.5
+		Number of hits	3
+		Number of base modified	1741
+
+Reference Name	ref5
+Number of sequences	1
+Number of hit(s)	2
+Number of base(s) modified	454
+Modified fasta	ref5_masked.fa.gz
+Modified Sequences
+	seq5.1
+		Number of hits	2
+		Number of base modified	454
+

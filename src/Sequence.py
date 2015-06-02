@@ -10,6 +10,9 @@
 * [Atlantic Gene Therapies - INSERM 1089] (http://www.atlantic-gene-therapies.fr/)
 """
 
+# Standard library imports
+from collections import OrderedDict
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Sequence(object):
     """ Base class representing a single sequence from a fasta file """
@@ -45,7 +48,7 @@ class Sequence(object):
     #~~~~~~~PROPERTIES AND MAGIC~~~~~~~#
 
     @property
-    def n_hit(self ):
+    def n_hit (self):
         return len(self.hit_list)
 
     def __len__ (self):
@@ -130,10 +133,30 @@ class Sequence_with_masker(Sequence):
 
         return masked_seq
 
-    def get_report (self):
-        """Generate a report under the form of a list"""
-        pass
+    def get_report (self, full=False):
+        """
+        Generate a report under the form of an Ordered dictionary
+        @param full If true a dict containing all self parameters will be returned
+        """
+        report = OrderedDict ()
+        report["Number of hits"] = self.n_hit
 
+        # Include in report only if hit where found in the sequence
+        if self.n_hit:
+            report["Number of base modified"] = self.mod_bases
+            if full:
+                report["Sequence length"] = self.seq_len
+                report["Percent of modified bases"] = float(self.mod_bases)/self.seq_len*100.0
+
+                # Details of blast hits
+                report["Blast Hits"] = OrderedDict ()
+
+                # Sort the hit list according to the name and start coordinate of the query
+                hit_list = sorted( self.hit_list, key=lambda x: (x.q_id, x.q_start))
+                for i, hit in enumerate(hit_list):
+                    report["Blast Hits"]["Hit {:03d}".format(i+1)] = hit.get_report(full=full)
+
+        return report
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Sequence_with_replacer(Sequence):
@@ -199,6 +222,7 @@ class Sequence_with_replacer(Sequence):
         pass
         ## CREATE META HITS... I DON'T KNOW HOW ... TAKE INTO ACCOUNT ILLEGAL CHARACTERS...
 
+    ###### TODO
     def get_report (self):
         """Generate a report under the form of a list"""
         pass

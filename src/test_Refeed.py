@@ -224,6 +224,9 @@ def test_Sequence_output_sequence_2 ():
         for hit in hit_list:
             sequence.add_hit(hit)
 
+        for i, j in sequence.get_report().items():
+            print ("{}\t{}".format(i,j))
+
         masked_sequence = (sequence.output_sequence())
 
         # For visual confirmation of proper masking

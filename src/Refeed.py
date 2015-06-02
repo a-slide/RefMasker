@@ -20,7 +20,8 @@ try:
     import sys
     from os import R_OK, access
     from time import time
-    #from datetime import datetime
+    from collections import OrderedDict
+    from datetime import datetime
 
     # Third party import
     import pyfasta # mandatory for fasta reading in the reference class
@@ -96,24 +97,26 @@ class Refeed(object):
             cp = ConfigParser.RawConfigParser(allow_no_value=True)
             cp.read(self.conf)
 
-            print("\tParse output options")
+            print(" * Parse output options")
             # Output parameters section
+            self.summary_report = cp.getboolean("Output", "summary_report")
+            self.detailed_report = cp.getboolean("Output", "detailed_report")
             self.mask_homologies = cp.getboolean("Output", "mask_homologies")
             self.replace_homologies = cp.getboolean("Output", "replace_homologies")
             self.compress_output = cp.getboolean("Output", "compress_output")
             assert self.mask_homologies != self.replace_homologies, \
             "mask_homologies and replace_homologies ar incompatible"
 
-            print("\tParse Blast options")
+            print(" * Parse Blast options")
             # Blast parameters section
             self.blastn_exec = cp.get("Blast", "blastn_exec")
             self.makeblastdb_exec = cp.get("Blast", "makeblastdb_exec")
             self.blast_task = cp.get("Blast", "blast_task")
-            self.best_query_hit = cp.get("Blast", "best_query_hit")
+            self.best_query_hit = cp.getboolean("Blast", "best_query_hit")
             self.evalue = cp.getfloat("Blast", "evalue")
             assert self.evalue > 0, "Authorized values for evalue: float > 0"
 
-            print("\tParse Reference sequences")
+            print(" * Parse Reference sequences")
             # Iterate only on sections starting by "reference", create Reference objects
             # And store them in a list
             self.reference_list = []
@@ -123,7 +126,8 @@ class Refeed(object):
                     Reference (
                         name = rm_blank(cp.get(reference, "name"), replace ='_'),
                         fasta = rm_blank(cp.get(reference, "fasta"), replace ='\ '),
-                        masking = self.mask_homologies))
+                        masking = self.mask_homologies,
+                        compress = self.compress_output))
 
         # Handle the many possible errors occurring during conf file parsing or variable test
         except (ConfigParser.NoOptionError, ConfigParser.NoSectionError) as E:
@@ -159,7 +163,7 @@ class Refeed(object):
         forth until there is only 1 reference remaining
         """
         start_time = time()
-        print ("Start to process files")
+        print ("\nStart to process files")
         # Iterate over index in Reference.instances staring by the last one until the 2nd one
 
         try:
@@ -167,14 +171,14 @@ class Refeed(object):
                 subject = self.reference_list[i]
                 query_list = self.reference_list[0:i]
 
-                print ("Processing Reference {}".format(subject.name))
+                print ("\nProcessing Reference \"{}\"".format(subject.name))
 
                 # Create a blast database for the current subject sequence
                 with Blastn(ref_path=subject.fasta, makeblastdb_exec=self.makeblastdb_exec) as blastn:
 
                     # Blast each query file of the query list against the subject
                     for query in query_list:
-                        print ("Blast {} against {} database".format(query.name, subject.name))
+                        print (" * Blast against \"{}\"".format(query.name))
 
                         # Save the list of hit in a local variable
                         hit_list = blastn (
@@ -182,35 +186,68 @@ class Refeed(object):
                             blastn_exec = self.blastn_exec,
                             task = self.blast_task,
                             evalue = self.evalue,
-                            best_query_hit = self.best_query_hit) ################################################################ ERROR
+                            best_query_hit = self.best_query_hit)
 
                         # Add the hit of list found to the subject
                         if hit_list:
+                            print("   * {} hit(s) found".format(len(hit_list)))
                             subject.add_hit_list(hit_list)
 
-                    # if hits were found output the new fasta file in the current folder
-                    subject.output_reference (compress=self.compress_output)
+                        else:
+                            print ("   * No hit found")
+
+                # if hits were found output the new fasta file in the current folder
+                if subject.n_hit:
+                    print (" * Write a modified reference fasta file in the current directory")
+                    subject.output_reference ()
+                else:
+                    print (" * Reference file unmodified")
+
+            # Write reports if requested
+            if self.summary_report:
+                print ("\nGenerate a summary report")
+                with open ("Summary_report.csv", "w") as report:
+                    report.write ("Program {}\tDate {}\n\n".format(self.VERSION,str(datetime.today())))
+                    for ref in self.reference_list:
+                        report.write(self._dict_to_report(ref.get_report(full=False)))
+                        report.write("\n")
+
+            if self.detailed_report:
+                with open ("Detailed_report.csv", "w") as report:
+                    print ("\nGenerate a detailed report")
+                    report.write ("Program {}\tDate {}\n\n".format(self.VERSION,str(datetime.today())))
+                    for ref in self.reference_list:
+                        report.write(self._dict_to_report(ref.get_report(full=True)))
+                        report.write("\n")
 
         # Catch possible exceptions
         except Exception as E:
-            print ("Error during execution of Refeed")
+            print ("ERROR during execution of Refeed")
             print (E.message)
-            print ("Generate a report and exit\n")
 
-        # Even in case of exception this block will always be executed
+        # Even in case of exception this block will  be executed to remove temporary files
         finally:
-            # Write a report
-            print ("Generate_a csv report")
-
+            print ("\nCleanup temporary files")
             for ref in self.reference_list:
-                ref.get_report()
                 ref.clean()
 
-            print ("Done in {}s".format(round(time()-start_time, 3)))
+            print ("\nDone in {}s".format(round(time()-start_time, 3)))
             return(0)
 
     #~~~~~~~PRIVATE METHODS~~~~~~~#
 
+    def _dict_to_report(self, d, tab=""):
+        """
+        Recursive function to return a text report from nested dict or OrderedDict objects
+        """
+        report = ""
+        for name, value in d.items():
+            if type(value) == OrderedDict or type(value) == dict:
+                report += "{}{}\n".format(tab, name)
+                report += self._dict_to_report(value, tab=tab+"\t")
+            else:
+                report += "{}{}\t{}\n".format(tab, name, value)
+        return report
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #   TOP LEVEL INSTRUCTIONS

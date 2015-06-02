@@ -1,0 +1,154 @@
+Program Refeed 0.1	Date 2015-06-02 13:48:22.218724
+
+Reference Name	ref1
+Number of sequences	2
+Number of hit(s)	0
+
+Reference Name	ref2
+Number of sequences	3
+Number of hit(s)	6
+Number of base(s) modified	1087
+Modified fasta	ref2_masked.fa.gz
+Modified Sequences
+	seq2.1
+		Number of hits	4
+		Number of base modified	920
+		Sequence length	3220
+		Percent of modified bases	0.0
+		Blast Hits
+			Hit 001
+				Query	seq1.1:0-197(+)
+				Subject	seq2.1:0-198(+)
+				Identity	99.49
+				Evalue	5e-99
+				Bit Score	349.0
+				Hit length	198
+				Number of gap	1
+				Number of mismatch	0
+			Hit 002
+				Query	seq1.1:1019-1470(+)
+				Subject	seq2.1:868-1319(+)
+				Identity	100.0
+				Evalue	0.0
+				Bit Score	814.0
+				Hit length	451
+				Number of gap	0
+				Number of mismatch	0
+			Hit 003
+				Query	seq1.2:0-271(+)
+				Subject	seq2.1:1319-1590(+)
+				Identity	100.0
+				Evalue	1e-141
+				Bit Score	489.0
+				Hit length	271
+				Number of gap	0
+				Number of mismatch	0
+			Hit 004
+				Query	seq1.2:557-746(+)
+				Subject	seq2.1:0-189(-)
+				Identity	100.0
+				Evalue	4e-97
+				Bit Score	342.0
+				Hit length	189
+				Number of gap	0
+				Number of mismatch	0
+	seq2.3
+		Number of hits	2
+		Number of base modified	167
+		Sequence length	454
+		Percent of modified bases	0.0
+		Blast Hits
+			Hit 001
+				Query	seq1.1:0-166(+)
+				Subject	seq2.3:287-454(-)
+				Identity	99.4
+				Evalue	3e-82
+				Bit Score	293.0
+				Hit length	167
+				Number of gap	1
+				Number of mismatch	0
+			Hit 002
+				Query	seq1.2:579-746(+)
+				Subject	seq2.3:287-454(+)
+				Identity	100.0
+				Evalue	3e-85
+				Bit Score	302.0
+				Hit length	167
+				Number of gap	0
+				Number of mismatch	0
+
+Reference Name	ref3
+Number of sequences	2
+Number of hit(s)	0
+
+Reference Name	ref4
+Number of sequences	5
+Number of hit(s)	3
+Number of base(s) modified	1741
+Modified fasta	ref4_masked.fa.gz
+Modified Sequences
+	seq4.5
+		Number of hits	3
+		Number of base modified	1741
+		Sequence length	3017
+		Percent of modified bases	0.0
+		Blast Hits
+			Hit 001
+				Query	seq3.1:159-595(+)
+				Subject	seq4.5:2569-3004(-)
+				Identity	98.39
+				Evalue	0.0
+				Bit Score	751.0
+				Hit length	436
+				Number of gap	1
+				Number of mismatch	6
+			Hit 002
+				Query	seq3.2:530-1800(+)
+				Subject	seq4.5:158-1428(-)
+				Identity	99.45
+				Evalue	0.0
+				Bit Score	2259.0
+				Hit length	1270
+				Number of gap	0
+				Number of mismatch	7
+			Hit 003
+				Query	seq3.2:914-953(+)
+				Subject	seq4.5:1425-1464(-)
+				Identity	100.0
+				Evalue	1e-14
+				Bit Score	71.6
+				Hit length	39
+				Number of gap	0
+				Number of mismatch	0
+
+Reference Name	ref5
+Number of sequences	1
+Number of hit(s)	2
+Number of base(s) modified	454
+Modified fasta	ref5_masked.fa.gz
+Modified Sequences
+	seq5.1
+		Number of hits	2
+		Number of base modified	454
+		Sequence length	4344
+		Percent of modified bases	0.0
+		Blast Hits
+			Hit 001
+				Query	seq4.1:8-462(+)
+				Subject	seq5.1:0-454(+)
+				Identity	100.0
+				Evalue	0.0
+				Bit Score	820.0
+				Hit length	454
+				Number of gap	0
+				Number of mismatch	0
+			Hit 002
+				Query	seq4.5:0-86(+)
+				Subject	seq5.1:0-86(-)
+				Identity	100.0
+				Evalue	1e-40
+				Bit Score	156.0
+				Hit length	86
+				Number of gap	0
+				Number of mismatch	0
+
