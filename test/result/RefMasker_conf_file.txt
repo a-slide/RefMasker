@@ -18,14 +18,6 @@ summary_report = True
 # Output a detailed report including all blast hit coordinates and evalue
 detailed_report = True
 
-# Replace homologies in the reference with the query sequence instead of masking with "N"
-# (incompatible with replace_homologies)(BOOLEAN)
-mask_homologies : True
-
-# Replace homologies in the reference with the query sequence instead of masking with the
-# replacement character (incompatible with mask_homologies) (BOOLEAN)
-replace_homologies : False
-
 # Gzip fasta output (BOOLEAN)
 compress_output : True
 

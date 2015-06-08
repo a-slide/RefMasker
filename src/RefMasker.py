@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-@package    Refeed
+@package    RefMasker
 @brief      Main file of the program
 @copyright  [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html)
 @author     Adrien Leger - 2015
@@ -39,15 +39,20 @@ except ImportError as E:
     exit()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-class Refeed(object):
+class RefMasker(object):
     """
-
+    Main class of RefMasker program. Can output a model configuration file OR parse a filed
+    configuration file, load and prepare References, perform iterative blast starting from the
+    last reference against all others, then the penultimate against References listed before, and
+    so one until there is only 1 reference. For References in which at least one read was found
+    positions overlapped by blast hits are hard masked with *N* and written in a new fasta file.
+    Finally, CSV reports are generated and the temporary files are deleted.
     """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
     #~~~~~~~CLASS FIELDS~~~~~~~#
 
-    VERSION = "Refeed 0.1"
+    VERSION = "RefMasker 0.1"
     USAGE = "Usage: %prog -c Conf.txt [-i -h]"
 
     #~~~~~~~CLASS METHODS~~~~~~~#
@@ -68,7 +73,7 @@ class Refeed(object):
         # Parse arguments
         options, args = optparser.parse_args()
 
-        return Refeed(options.conf_file, options.init_conf)
+        return RefMasker(options.conf_file, options.init_conf)
 
     #~~~~~~~FONDAMENTAL METHODS~~~~~~~#
 
@@ -84,7 +89,7 @@ class Refeed(object):
             write_example_conf()
             sys.exit(0)
 
-        print("Initialize Refeed")
+        print("Initialize RefMasker")
         # Parse the configuration file and verify the values of variables
         try:
 
@@ -101,11 +106,7 @@ class Refeed(object):
             # Output parameters section
             self.summary_report = cp.getboolean("Output", "summary_report")
             self.detailed_report = cp.getboolean("Output", "detailed_report")
-            self.mask_homologies = cp.getboolean("Output", "mask_homologies")
-            self.replace_homologies = cp.getboolean("Output", "replace_homologies")
             self.compress_output = cp.getboolean("Output", "compress_output")
-            assert self.mask_homologies != self.replace_homologies, \
-            "mask_homologies and replace_homologies ar incompatible"
 
             print(" * Parse Blast options")
             # Blast parameters section
@@ -126,7 +127,6 @@ class Refeed(object):
                     Reference (
                         name = rm_blank(cp.get(reference, "name"), replace ='_'),
                         fasta = rm_blank(cp.get(reference, "fasta"), replace ='\ '),
-                        masking = self.mask_homologies,
                         compress = self.compress_output))
 
         # Handle the many possible errors occurring during conf file parsing or variable test
@@ -143,7 +143,7 @@ class Refeed(object):
             sys.exit(1)
 
     def __str__(self):
-        msg = "Refeed CLASS\n\tParameters list\n"
+        msg = "RefMasker CLASS\n\tParameters list\n"
         # list all values in object dict in alphabetical order
         keylist = [key for key in self.__dict__.keys()]
         keylist.sort()
@@ -222,7 +222,7 @@ class Refeed(object):
 
         # Catch possible exceptions
         except Exception as E:
-            print ("ERROR during execution of Refeed")
+            print ("ERROR during execution of RefMasker")
             print (E.message)
 
         # Even in case of exception this block will  be executed to remove temporary files
@@ -255,5 +255,5 @@ class Refeed(object):
 
 if __name__ == '__main__':
 
-    refeed = Refeed.class_init()
-    refeed()
+    refmasker = RefMasker.class_init()
+    refmasker()

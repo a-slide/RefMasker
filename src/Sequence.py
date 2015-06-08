@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-@package    Refeed
-@brief      Helper class for Refeed to represent Sequences
+@package    RefMasker
+@brief      Helper class for RefMasker to represent Sequences
 @copyright  [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html)
 @author     Adrien Leger - 2014
 * <adrien.leger@gmail.com> <adrien.leger@inserm.fr> <adrien.leger@univ-nantes.fr>
@@ -15,7 +15,10 @@ from collections import OrderedDict
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Sequence(object):
-    """ Base class representing a single sequence from a fasta file """
+    """
+    Represent a single sequence from a fasta file and can store a list of Blasthits found by Blastn
+    Support masking of the original sequence with the *N* where blast hits were found
+    """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
     #~~~~~~~FUNDAMENTAL METHODS~~~~~~~#
@@ -55,14 +58,6 @@ class Sequence(object):
         """Support for len method"""
         return len(self.seq_record)
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-class Sequence_with_masker(Sequence):
-    """
-    Represent a single sequence from a fasta file and can store a list of Blasthits found by Blastn
-    Support masking of the original sequence with the *N* where blast hits were found
-    """
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
     #~~~~~~~PUBLIC METHODS~~~~~~~#
 
     def add_hit (self, hit):
@@ -89,12 +84,13 @@ class Sequence_with_masker(Sequence):
         # Finally append the modified hit to the list
         self.hit_list.append(hit)
 
+
+    # TODO : Create an option for soft masking
     def output_sequence (self):
         """
         Output a sequence corresponding to the original seq record sequence but masked with
         a masking character for bases overlapped by a BlastHit
         """
-
         if not self.hit_list:
             # No need to modify the sequence
             return str(self.seq_record)
@@ -157,91 +153,3 @@ class Sequence_with_masker(Sequence):
                     report["Blast Hits"]["Hit {:03d}".format(i+1)] = hit.get_report(full=full)
 
         return report
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-class Sequence_with_replacer(Sequence):
-    """
-    Represent a single sequence from a fasta file and can store a list of Blasthits found by Blastn
-    Support replacement of the original sequence with the sequence of hits where blast hits were
-    found
-    """
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-    # Class dict to compute the complement of a DNA sequence
-    DNA_COMPLEMENT = {'A':'T','T':'A','G':'C','C':'G','N':'N','a':'t','t':'a','g':'c','c':'g','n':'n'}
-
-    #~~~~~~~PUBLIC METHODS~~~~~~~#
-
-    def add_hit (self, hit):
-        """
-        Add a hit to hit_list after verification and eventual modifications depending of the
-        subject and query orientation and reversing of the aligned query sequence if needed
-        """
-
-        # Hit cannot have borders outside the sequence size
-        if hit.s_start > self.seq_len or hit.s_end > self.seq_len:
-            raise ValueError, ("Invalid hit: Outside of sequence borders")
-        if hit.s_id != self.name:
-            print hit.s_id
-            print self.name
-            raise ValueError, ("Invalid hit: hit subject name does not match Sequence name")
-
-        if hit.s_orient == "+":
-            # If the forward strand of the hit is aligned on the forward strand of the subject
-            if hit.q_orient == "+":
-                pass
-
-            # If only the query strand is reverse = reverse the query coordinates and make
-            # the reverse complement of the query sequence
-            else:
-                hit.q_start, hit.q_end = hit.q_end, hit.q_start
-                hit.q_seq = self._DNA_reverse_comp(hit.q_seq)
-
-        else:
-            # If the reverse strand of the hit is aligned on the reverse strand of the subject
-            # reverse the coordinates of the sequence but does not modify the query sequence
-            if hit.q_orient == "-":
-                hit.s_start, hit.s_end = hit.s_end, hit.s_start
-                hit.q_start, hit.q_end = hit.q_end, hit.q_start
-
-            # If only the reference strand is reverse = reverse the subject coordinates and make
-            # the reverse complement of the query sequence
-            else:
-                hit.s_start, hit.s_end = hit.s_end, hit.s_start
-                hit.q_seq = self._DNA_reverse_comp(hit.q_seq)
-
-        # Finally append the modified hit to the list
-        self.hit_list.append(hit)
-
-    ###### TODO
-    def output_sequence (self):
-        """
-        Output a sequence corresponding to the original seq record sequence but replaced with
-        the sequence of hits where blast hits were found
-        """
-        pass
-        ## CREATE META HITS... I DON'T KNOW HOW ... TAKE INTO ACCOUNT ILLEGAL CHARACTERS...
-
-    ###### TODO
-    def get_report (self):
-        """Generate a report under the form of a list"""
-        pass
-
-    #~~~~~~~PRIVATE METHODS~~~~~~~#
-
-    def _DNA_reverse_comp (self, sequence):
-        """
-        Generate the reverese complementary sequence of a given DNA sequence
-        @param sequence DNA sequence
-        @return Reverse complement of the sequence
-        """
-        rc = ""
-        for base in sequence[::-1]:
-            # Return the complement of a base except if an illegal character is found such as "-"
-            # in which case the char is returned)
-            try:
-                rc += self.DNA_COMPLEMENT[base]
-            except KeyError:
-                rc += base
-
-        return rc

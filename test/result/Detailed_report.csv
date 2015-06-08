@@ -1,4 +1,4 @@
-Program Refeed 0.1	Date 2015-06-02 13:48:22.218724
+Program RefMasker 0.1	Date 2015-06-08 12:50:02.917361
 
 Reference Name	ref1
 Number of sequences	2
@@ -14,7 +14,7 @@ Modified Sequences
 		Number of hits	4
 		Number of base modified	920
 		Sequence length	3220
-		Percent of modified bases	0.0
+		Percent of modified bases	28.5714285714
 		Blast Hits
 			Hit 001
 				Query	seq1.1:0-197(+)
@@ -56,7 +56,7 @@ Modified Sequences
 		Number of hits	2
 		Number of base modified	167
 		Sequence length	454
-		Percent of modified bases	0.0
+		Percent of modified bases	36.7841409692
 		Blast Hits
 			Hit 001
 				Query	seq1.1:0-166(+)
@@ -91,7 +91,7 @@ Modified Sequences
 		Number of hits	3
 		Number of base modified	1741
 		Sequence length	3017
-		Percent of modified bases	0.0
+		Percent of modified bases	57.7063307922
 		Blast Hits
 			Hit 001
 				Query	seq3.1:159-595(+)
@@ -131,7 +131,7 @@ Modified Sequences
 		Number of hits	2
 		Number of base modified	454
 		Sequence length	4344
-		Percent of modified bases	0.0
+		Percent of modified bases	10.4511970534
 		Blast Hits
 			Hit 001
 				Query	seq4.1:8-462(+)

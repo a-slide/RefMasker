@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-@package    Refeed
-@brief      Contain the template of the empty configuration file for Refeed
+@package    RefMasker
+@brief      Contain the template of the empty configuration file for RefMasker
 @copyright  [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html)
 @author     Adrien Leger - 2014
 * <adrien.leger@gmail.com>
@@ -14,7 +14,7 @@
 
 def write_example_conf():
 
-    with open ("Refeed_conf_file.txt", 'wb') as fp:
+    with open ("RefMasker_conf_file.txt", 'wb') as fp:
         fp.write ("""
 ###################################################################################################
 #                                   REFEED CONFIGURATION FILE                                      #
@@ -34,14 +34,6 @@ summary_report = True
 
 # Output a detailed report including all blast hit coordinates and evalue
 detailed_report = True
-
-# Replace homologies in the reference with the query sequence instead of masking with "N"
-# (incompatible with replace_homologies)(BOOLEAN)
-mask_homologies : True
-
-# Replace homologies in the reference with the query sequence instead of masking with the
-# replacement character (incompatible with mask_homologies) (BOOLEAN)
-replace_homologies : False
 
 # Gzip fasta output (BOOLEAN)
 compress_output : True

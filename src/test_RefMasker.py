@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-@package    Refeed
-@brief      Test function to be used with python package Refeed
+@package    ReMasker
+@brief      Test function to be used with python package ReMasker
 @copyright  [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html)
 @author     Adrien Leger - 2014
 * <adrien.leger@gmail.com> <adrien.leger@inserm.fr> <adrien.leger@univ-nantes.fr>
@@ -21,6 +21,7 @@ from random import choice as rc
 from shutil import rmtree
 from tempfile import mkdtemp
 from gzip import open as gopen
+from collections import OrderedDict
 
 # Third party packages import
 import pytest
@@ -30,7 +31,7 @@ import pyfasta
 sys.path.append(getcwd())
 
 # local package imports
-from Sequence import Sequence, Sequence_with_masker, Sequence_with_replacer
+from Sequence import Sequence
 from Reference import Reference
 from pyBlast.BlastHit import BlastHit
 from pyBlast.Blastn import Blastn
@@ -95,15 +96,12 @@ class defined_fasta (object):
 # FIXTURES FOR TESTS ##############################################################################
 
 @pytest.yield_fixture
-def yield_sequence(len_seq=500, n_seq=1, masking=True):
+def yield_sequence(len_seq=500, n_seq=1):
     with rand_fasta(len_seq, n_seq) as r:
         print ("Create a pyfasta record")
         pyfasta_Fasta = pyfasta.Fasta(r.fasta_path, flatten_inplace=True)
         for name, seq_record in pyfasta_Fasta.items():
-            if masking:
-                yield Sequence_with_masker(name = name, seq_record = seq_record)
-            else:
-                yield Sequence_with_replacer(name = name, seq_record = seq_record)
+            yield Sequence(name = name, seq_record = seq_record)
 
 @pytest.yield_fixture
 def yield_BlastHit(len_seq=100, n_hit=5, min_len_hit=5, max_len_hit=20, s_id="seq_0"):
@@ -121,7 +119,7 @@ def yield_sequence_and_BlastHit(len_seq=500, n_query=10, min_len_hit=20, max_len
     with rand_fasta(len_seq=len_seq, n_seq=1) as subject:
         pyfasta_gen = pyfasta.Fasta(subject.fasta_path, flatten_inplace=True)
         seq_record = pyfasta_gen["seq_0"]
-        sequence = Sequence_with_masker(name = "seq_0", seq_record = seq_record)
+        sequence = Sequence(name = "seq_0", seq_record = seq_record)
 
         seq_dict = {}
         # Generate random hits from the subject
@@ -148,22 +146,9 @@ def yield_reference(n_ref=1, len_seq=500, n_seq=1, gziped=False):
 
 def test_Sequence_create():
     """Test to verify sequence creation"""
-    for sequence in yield_sequence(len_seq=200, n_seq=1, masking=True):
+    for sequence in yield_sequence(len_seq=200, n_seq=1):
         print ("Test Sequence object creation")
         assert len(sequence) == 200
-
-@pytest.mark.parametrize("seq, rc_seq", [
-    ("AAATTTCCCGGG","CCCGGGAAATTT"),
-    ("ATCGN","NCGAT"),
-    ("actgnACTGN","NCAGTncagt"),
-    ("a---ctgnACT-GN","NC-AGTncag---t")])
-
-# Method define only in Sequence_with_replacer objects
-def test_Sequence_DNA_reverse_comp(seq, rc_seq):
-    """Test to verify the method DNA_reverse_comp"""
-    for sequence in yield_sequence(len_seq=10, n_seq=1, masking=False):
-        print ("Test Sequence _DNA_reverse_comp method")
-        assert sequence._DNA_reverse_comp(seq) == rc_seq
 
 @pytest.mark.parametrize("s_len, s_id, s_start, s_end, q_start, q_end, q_seq, s_start_res, s_end_res, q_start_res, q_end_res, q_seq_res", [
     pytest.mark.xfail((100, "seq_0", 90, 110, 0, 0, "" ,0, 0, 0, 0, "")),
@@ -175,7 +160,7 @@ def test_Sequence_DNA_reverse_comp(seq, rc_seq):
 
 def test_Sequence_add_hit(s_len, s_id, s_start, s_end, q_start, q_end, q_seq, s_start_res, s_end_res, q_start_res, q_end_res, q_seq_res):
     """Test the addition of valid and invalid hit to a Sequence object"""
-    for sequence in yield_sequence(len_seq=s_len, n_seq=1, masking=True):
+    for sequence in yield_sequence(len_seq=s_len, n_seq=1):
 
         hit = BlastHit(s_id=s_id, s_start=s_start, s_end=s_end, q_start=q_start, q_end=q_end, q_seq=q_seq)
         sequence.add_hit(hit)
@@ -193,7 +178,7 @@ def test_Sequence_output_sequence_1 (len_seq, n_hit):
     Test the capacity of a Sequence object to generate a masked sequence from fake a list of fake
     BlastHit objects
     """
-    for sequence in yield_sequence(len_seq=len_seq, n_seq=1, masking=True):
+    for sequence in yield_sequence(len_seq=len_seq, n_seq=1):
 
         # If no hit the return seq should be the same than the original one
         assert sequence.output_sequence() == str(sequence.seq_record)
@@ -263,7 +248,7 @@ def test_Reference_add_hit_list(n_ref, len_seq, n_seq):
     """Test the ability of add_hit_list to add a proper number of fake hits to each sequence in ref"""
     for ref in yield_reference(n_ref=n_ref, len_seq=len_seq, n_seq=n_seq):
 
-        seq_dict = {}
+        seq_dict = OrderedDict()
         hit_list = []
         for i in range (n_seq):
             n_hit = ri (0,10)
@@ -284,23 +269,23 @@ def test_Reference_add_hit_list(n_ref, len_seq, n_seq):
 def test_Reference_output_masked_reference():
     """Test the all Reference methods with predetermined ref and hits"""
 
-    original_ref = {
-        "s0" : "ATATTCGCTGCTCAGCTCGTCGATCGCGCACAGCTACGTCGCGCTGTCATGACGTTAGCATCGTACGCATATACTTCAGCTCTGACGATCAGCTACGACTCGCAGCTAGCCTACGACTAGCAGTCTCGTACCGTATGCGTCAGCTCAGCATCAT",
-        "s1" : "CGCTAGCTAGCGATTATTCGCTAGCTCGTCGATCGTCGCCTAGATCGTCGATCAGTCAGTCGTCAGTGTGTAACACGTCAGTCAAGCTCAGCTAGCTCGTCGTATGACGCGCGCTATATCGTAGACGATACGCTCGACTAGCATGCATCAGCAT"}
+    original_ref = OrderedDict()
+    original_ref ["s0"] = "ATATTCGCTGCTCAGCTCGTCGATCGCGCACAGCTACGTCGCGCTGTCATGACGTTAGCATCGTACGCATATACTTCAGCTCTGACGATCAGCTACGACTCGCAGCTAGCCTACGACTAGCAGTCTCGTACCGTATGCGTCAGCTCAGCATCAT"
+    original_ref ["s1"] = "CGCTAGCTAGCGATTATTCGCTAGCTCGTCGATCGTCGCCTAGATCGTCGATCAGTCAGTCGTCAGTGTGTAACACGTCAGTCAAGCTCAGCTAGCTCGTCGTATGACGCGCGCTATATCGTAGACGATACGCTCGACTAGCATGCATCAGCAT"
 
-    expected_ref = {
-        "s0" : "NNNNNNNNNNNNNNNNNNNNNNNNNNCGCACAGCTACGTCGCGCTGTCATGACGTNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNTAGCCTACGACTAGCAGTCNNNNNNNNNNNNNNNNNNNNNNNNNNNAT",
-        "s1" : "CGCTAGCNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNCTAGATCGTCNNNNNNNNNNNNNNNNNNNNNNNNNACGTCAGTCAAGCTCAGCTAGCTCGTCGTATGACGCGCGNNNNNNNNNNNNNNNNNNNNNNNNNNNNCATGCATCAGCAT"}
+    expected_ref = OrderedDict()
+    expected_ref ["s0"] = "NNNNNNNNNNNNNNNNNNNNNNNNNNCGCACAGCTACGTCGCGCTGTCATGACGTNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNTAGCCTACGACTAGCAGTCNNNNNNNNNNNNNNNNNNNNNNNNNNNAT"
+    expected_ref ["s1"] = "CGCTAGCNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNCTAGATCGTCNNNNNNNNNNNNNNNNNNNNNNNNNACGTCAGTCAAGCTCAGCTAGCTCGTCGTATGACGCGCGNNNNNNNNNNNNNNNNNNNNNNNNNNNNCATGCATCAGCAT"
 
-    query = {
-        "q0" : "CGATCGACGAGCTGAGCAGCGAATAT",        # reverse match in s0
-        "q1" : "TAGCATCGTACGCATATACTTCAGCTCTGA",    # forward match in s0
-        "q2" : "CTCTGACGATCAGCTACCACTCGCAGC",         # forward match in s0 with 1 mismatch
-        "q3" : "TCGTACCGTATGCGTACAGCTCAGCATC",         # forward match in s0 with 2 mismatches and 1 insertion
-        "q4" : "CGATCGACGAGCTAGCGAATAATCGCTA",      # reverse match in s1
-        "q5" : "GATCAGTCAGTCGTCAGTGTGTAAC",         # forward match in s1
-        "q6" : "GATTATTCGCTAGTCGTCGATCGTCGC",         # forward match in s1 with 1 deletion
-        "q7" : "CTATATACGTAGACGATACGTCGACTAGG"}         # forward match in s1 with 1 mismatches, 1 deletion and 1 insertion
+    query = OrderedDict()
+    query ["q0"] = "CGATCGACGAGCTGAGCAGCGAATAT"       # reverse match in s0
+    query ["q1"] = "TAGCATCGTACGCATATACTTCAGCTCTGA"   # forward match in s0
+    query ["q2"] = "CTCTGACGATCAGCTACCACTCGCAGC"      # forward match in s0 with 1 mismatch
+    query ["q3"] = "TCGTACCGTATGCGTACAGCTCAGCATC"     # forward match in s0 with 2 mismatches and 1 insertion
+    query ["q4"] = "CGATCGACGAGCTAGCGAATAATCGCTA"     # reverse match in s1
+    query ["q5"] = "GATCAGTCAGTCGTCAGTGTGTAAC"        # forward match in s1
+    query ["q6"] = "GATTATTCGCTAGTCGTCGATCGTCGC"      # forward match in s1 with 1 deletion
+    query ["q7"] = "CTATATACGTAGACGATACGTCGACTAGG"    # forward match in s1 with 1 mismatches, 1 deletion and 1 insertion
 
     # Create a reference fasta file
     with defined_fasta(seq_dict=original_ref) as ref_fasta:
@@ -311,19 +296,19 @@ def test_Reference_output_masked_reference():
                 hit_list = blastn(query_fasta.fasta_path, task="blastn", best_query_hit=True,)
 
         # Create a Reference Object for the reference fasta file
-        with Reference(name="ref0", fasta=ref_fasta.fasta_path) as reference:
+        with Reference(name="ref0", fasta=ref_fasta.fasta_path, compress=False) as reference:
 
              # Should return None since no hit were added
+            print ("Test output_masked_reference without hit added")
             assert not reference.output_reference ()
 
             # Add test
             reference.add_hit_list (hit_list)
             print ("Test output_masked_reference with hits added")
-            masked_obtained = reference.output_reference (compress=False)
+            masked_obtained = reference.output_reference ()
 
             with defined_fasta(seq_dict=expected_ref) as masked_expected:
                 # files should be equal
-
                 with open(masked_obtained, "r") as obtained:
                     with open(masked_expected.fasta_path, "r") as expected:
                         for l1, l2 in zip(obtained.readlines(), expected.readlines()):
