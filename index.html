@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Refeed by a-slide</title>
+    <title>RefMasker by a-slide</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,52 +11,181 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Refeed</h1>
-      <h2 class="project-tagline">Mask homologies in fasta reference sequences based on an user provided ranking (IN DEVELOPMENT)</h2>
-      <a href="https://github.com/a-slide/Refeed" class="btn">View on GitHub</a>
-      <a href="https://github.com/a-slide/Refeed/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/a-slide/Refeed/tarball/master" class="btn">Download .tar.gz</a>
+      <h1 class="project-name">RefMasker</h1>
+      <h2 class="project-tagline">Hard mask homologies between fasta reference sequences identified by Blastn</h2>
+      <a href="https://github.com/a-slide/RefMasker" class="btn">View on GitHub</a>
+      <a href="https://github.com/a-slide/RefMasker/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/a-slide/RefMasker/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
-      <h1>
-<a id="refeed" class="anchor" href="#refeed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Refeed</h1>
+      <hr>
 
-<p>Mask or replace homologies in fasta reference sequences based on an user provided ranking </p>
+<p><strong>Creation : 2015/06/08</strong></p>
 
-<p><strong>IN DEVELOPMENT</strong></p>
+<p><strong>Last update : 2015/06/24</strong></p>
 
-<p>The order of references is CRITICAL if you want to perform a reference masking by the last reference masked by all the others then the penultimate masked by all others except the last and and so on until there is only one reference remaining</p>
+<hr>
 
-<p><strong>Wrapper for Blastn from NCBI Blast</strong>
-Please see the Blast+ user manual document for further details</p>
+<h2>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Motivation</h2>
 
-<p><a href="http://www.ncbi.nlm.nih.gov/books/NBK1762/">MANUAL</a></p>
+<p>RefMasker is a <strong>python2.7</strong> object oriented script that was developed in order to attribute more correctly short sequencing reads obtained from a mix of reference sequences whose abundance is highly unbalanced. Indeed, a rare reference with sequence homologies with a much frequent reference can result in possible misattributions of reads to the rarest sequence and thus, a large overestimation of this sequence.</p>
 
-<p>Basically the top level function Blastn.align processes sequences as follow:</p>
+<h2>
+<a id="principle" class="anchor" href="#principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Principle</h2>
+
+<ol>
+<li>Users can generate a template configuration file and fill it according to their requirements. The order of references indicated in the configuration file is <strong>CRITICAL</strong> since it will determine the order in which sequences will be masker thereafter.</li>
+<li>The configuration file containing all program parameters (including reference fasta location) is parsed and verified for validity.</li>
+<li>Following the order indicated in the configuration file, reference fasta files are uncompressed (if needed), parsed, and indexed using a memory mapping.</li>
+<li>An iterative masking is performed, starting from the last reference (<strong>subject</strong>) against all the references listed before (<strong>queries</strong>). For each new iteration the penultimate reference from the previous iteration becomes the <strong>subject</strong> and is removed from the <strong>queries</strong> (see figure below).</li>
+<li>When the list of queries is empty the iteration stops.</li>
+<li>Depending of the user requirements, blast and masking reports are generated.</li>
+</ol>
+
+<p><img src="https://raw.githubusercontent.com/a-slide/RefMasker/master/fig/RefMasker_iteration.png" alt="RefMasker_iteration"></p>
+
+<p><strong>Details of iterations</strong></p>
 
 <ul>
-<li>If a blastn database is provided it will attempt to validate it by creating and MakeblastdbWrapper.ExistingDB object.</li>
-<li>If the validation fails of if no database was provided a new database will be created by using MakeblastdbWrapper.NewDB from a reference fasta file</li>
-<li>A instance of BlastnWrapper.Aligner is then created by passing the DB object as an argument.</li>
-<li>A list of fasta file (each can contains many sequences) is then submitted one by one to the balst database though  BlastnWrapper.Aligner</li>
-<li>For each query fasta a list of BlastHit objects containing informations for blast hits found will be returned</li>
-<li>Hit lists are combined into a single flat list and returned at the end of Blastn.align execution.</li>
+<li>Imperfect matches between the subject and the queries are found using a wrapper of NCBI Blast+ (<a href="http://a-slide.github.io/pyBlast">pyBlast submodule</a>)</li>
+<li>If matches were found, the program writes a masked version of the subject reference where each positions of the subject overlapping hits is replaced by a 'N' base (hard masking).</li>
+<li>The subject reference is removed from the reference list.</li>
 </ul>
 
-<p><a href="https://github.com/copyright" class="user-mention">@copyright</a> <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License v2</a>
-<a href="https://github.com/author" class="user-mention">@author</a> Adrien Leger - 2014</p>
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>The program was developed under Linux Mint 17 and was not tested with other OS.</p>
+
+<p>In addition to python2.7 the following dependencies are required for proper program execution:</p>
 
 <ul>
-<li><a href="mailto:adrien.leger@gmail.com">adrien.leger@gmail.com</a></li>
-<li><a href="mailto:adrien.leger@inserm.fr">adrien.leger@inserm.fr</a></li>
-<li><a href="mailto:adrien.leger@univ-nantes.fr">adrien.leger@univ-nantes.fr</a></li>
-<li><a href="https://github.com/a-slide">Github</a></li>
+<li>
+<a href="http://blast.ncbi.nlm.nih.gov.gate2.inist.fr/Blast.cgi?PAGE_TYPE=BlastDocs&amp;DOC_TYPE=Download">ncbi blast+</a> 2.2.28+</li>
+</ul>
+
+<p>Install blast with your favorite package manager (ex: <code>sudo apt-get install ncbi-blast+</code>) </p>
+
+<ul>
+<li>python package <a href="https://github.com/brentp/pyfasta/">pyfasta</a> 0.5.2 +</li>
+</ul>
+
+<p>Install pip with your favorite package manager and enter the following line to install pyfasta: <code>sudo pip install pyfasta</code></p>
+
+<h2>
+<a id="get-and-install" class="anchor" href="#get-and-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get and install</h2>
+
+<ul>
+<li><p>Clone the repository in <strong>recursive mode</strong> to download the main repo and its submodules <code>git clone --recursive https://github.com/a-slide/RefMasker.git</code></p></li>
+<li><p>Enter the src folder of the program folder and make the main script executable <code>sudo chmod u+x RefMasker.py</code></p></li>
+<li><p>Finally, add RefMasker.py to your PATH</p></li>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>In the folder where files will be created</p>
+
+<pre><code>Usage: RefMasker.py -c Conf.txt [-i -h]
+
+Options:
+  --version     show program's version number and exit
+  -h, --help    show this help message and exit
+  -c CONF_FILE  Path to the configuration file [Mandatory]
+  -i            Generate an example configuration file and exit [Facultative]
+</code></pre>
+
+<p>An example configuration file can be generated by running the program with the option -i</p>
+
+<p>The possible options are extensively described in the configuration file.</p>
+
+<p>The program can be tested from the test folder with the dataset provided and the default configuration file.</p>
+
+<pre><code>cd ./test/result
+RefMasker.py -i
+RefMasker.py -c Quade_conf_file.txt
+</code></pre>
+
+<h2>
+<a id="testings" class="anchor" href="#testings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testings</h2>
+
+<p>The module can be easily tested thanks to <a href="http://pytest.org/latest/">pytest</a>. It will also test the pyBlast submodule.</p>
+
+<ul>
+<li>Install pytest with pip <code>pip install pytest</code>
+</li>
+<li>Run test with py.test-2.7 -v</li>
+</ul>
+
+<p>Example of output if successful. Please note than some tests might fail due to the random sampling of DNA sequences, and uncertainties of Blastn algorithm.</p>
+
+<pre><code>========================================================================= test session starts =========================================================================
+platform linux2 -- Python 2.7.5 -- py-1.4.27 -- pytest-2.7.0 -- /usr/bin/python
+rootdir: /home/adrien/Programming/Python/Refeed/src, inifile: 
+collected 39 items 
+
+test_RefMasker.py::test_Sequence_create PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-110-0-0--0-0-0-0-] xfail
+test_RefMasker.py::test_Sequence_add_hit[100-seq_1-80-100-0-0--0-0-0-0-] xfail
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-80-90-20-30-ATCG-79-90-19-30-ATCG] PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-80-20-30-ATCG-79-90-19-30-CGAT] PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-80-90-30-20-ATCG-79-90-19-30-CGAT] PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-80-30-20-ATCG-79-90-19-30-ATCG] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_1[100-1] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_1[100-5] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_1[200-10] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_2 PASSED
+test_RefMasker.py::test_Reference_create[1-1000-1-False] PASSED
+test_RefMasker.py::test_Reference_create[1-1000-1-True] PASSED
+test_RefMasker.py::test_Reference_create[2-10000-2-False] PASSED
+test_RefMasker.py::test_Reference_create[2-10000-2-True] PASSED
+test_RefMasker.py::test_Reference_add_hit_list[1-1000-1] PASSED
+test_RefMasker.py::test_Reference_add_hit_list[2-10000-2] PASSED
+test_RefMasker.py::test_Reference_output_masked_reference PASSED
+pyBlast/test_pyBlast.py::test_BlastHit[36.9133828132-88-75-85-47-98-88-14-8.78046725086-92.5815421121] PASSED
+pyBlast/test_pyBlast.py::test_BlastHit[-1-19-100-17-17-54-53-33-79.1465130808-41.6977101708] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[65.8976266941--1-46-9-74-59-97-56-59.2270229149-93.0689987714] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[75.9701897823-71--1-26-16-91-16-82-5.78377016797-79.1291574854] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[80.9394959784-54-85--1-5-78-33-35-8.3011500976-53.4993883036] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[35.5821954158-26-23-29--1-69-35-57-47.706286329-4.1842760318] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[52.9290346724-31-3-44-74--1-30-76-36.6917151434-43.8870409292] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[16.7597390274-26-0-37-100-15--1-91-89.8637578655-63.9053323995] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[94.5094431806-49-70-48-9-39-80--1-72.722423521-98.7208732416] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[44.4349347822-84-83-96-49-59-16-9--1-91.9302274501] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[77.9794166482-19-89-79-33-46-9-26-21.2569521087--1] xfail
+pyBlast/test_pyBlast.py::test_Blastn[blastn-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[blastn-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[blastn-short-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[blastn-short-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[dc-megablast-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[dc-megablast-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[megablast-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[megablast-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[rmblastn-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[rmblastn-Random queries] xfail
+
+================================================================ 22 passed, 17 xfailed in 7.02 seconds ================================================================
+</code></pre>
+
+<h2>
+<a id="authors-and-contact" class="anchor" href="#authors-and-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contact</h2>
+
+<p>Adrien Leger - 2015</p>
+
+<ul>
+<li>
+<a href="mailto:adrien.leger@gmail.com">adrien.leger@gmail.com</a> - <a href="mailto:adrien.leger@inserm.fr">adrien.leger@inserm.fr</a> - <a href="mailto:adrien.leger@univ-nantes.fr">adrien.leger@univ-nantes.fr</a>
+</li>
+<li>
+<a href="https://github.com/a-slide">a-slide</a> at Github</li>
 <li><a href="http://www.atlantic-gene-therapies.fr/">Atlantic Gene Therapies - INSERM 1089</a></li>
+<li><a href="http://a-slide.github.io/">Drowned in genomics</a></li>
 </ul>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/a-slide/Refeed">Refeed</a> is maintained by <a href="https://github.com/a-slide">a-slide</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/a-slide/RefMasker">RefMasker</a> is maintained by <a href="https://github.com/a-slide">a-slide</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
