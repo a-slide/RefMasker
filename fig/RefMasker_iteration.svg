@@ -10,8 +10,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1668.5583"
-   height="668.60583"
+   width="1931.7399"
+   height="688.60583"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -102,21 +102,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.53030303"
-     inkscape:cx="750.88787"
-     inkscape:cy="567.97078"
+     inkscape:zoom="0.40174472"
+     inkscape:cx="891.8661"
+     inkscape:cy="568.85123"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g6920"
      showgrid="false"
      inkscape:window-width="1918"
      inkscape:window-height="1030"
      inkscape:window-x="1366"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-top="10"
+     fit-margin-left="10"
+     fit-margin-right="10"
+     fit-margin-bottom="10" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -133,7 +133,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(487.51645,-1382.5693)">
+     transform="translate(497.5,-1372.5693)">
     <g
        id="g5523"
        transform="translate(-293.36919,1129.9038)">
@@ -155,7 +155,10 @@
          height="469.35727"
          width="333.35034"
          id="rect6783-6"
-         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <rect
          ry="2"
          rx="2"
@@ -164,7 +167,10 @@
          height="469.35727"
          width="333.35034"
          id="rect6783-2"
-         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <rect
          ry="2"
          rx="2"
@@ -173,7 +179,10 @@
          height="469.35727"
          width="333.35034"
          id="rect6783-1"
-         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <rect
          ry="2"
          rx="2"
@@ -182,38 +191,56 @@
          height="469.35727"
          width="333.35034"
          id="rect6783"
-         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+         style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <path
          sodipodi:nodetypes="czc"
          inkscape:connector-curvature="0"
          id="path5578"
          d="m -194.48687,1833.0697 c 6.462,102.3 22.34367,99.3384 136.508479,99.3384 114.1648,0 136.508473,0.6322 136.508473,-99.3384"
-         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)" />
+         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <path
          sodipodi:nodetypes="czc"
          inkscape:connector-curvature="0"
          id="path5578-5"
          d="m 233.05119,1833.0697 c 6.462,102.3 22.34367,99.3384 136.50848,99.3384 114.1648,0 136.50847,0.6322 136.50847,-99.3384"
-         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)" />
+         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <path
          sodipodi:nodetypes="czc"
          inkscape:connector-curvature="0"
          id="path5578-0"
          d="m 660.58917,1833.0697 c 6.462,102.3 22.34362,99.3384 136.50857,99.3384 114.1648,0 136.5084,0.6322 136.5084,-99.3384"
-         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)" />
+         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path5578-07"
          d="m -485.51645,1934.058 c 114.1648,0 136.50847,0.6322 136.50847,-99.3384"
-         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)" />
+         style="fill:none;stroke:#000000;stroke-width:3.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 11.99999999;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <text
          sodipodi:linespacing="131.99999%"
          id="text6606"
          y="1991.9193"
          x="-435.9187"
          style="font-size:36px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-         xml:space="preserve"><tspan
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            style="font-size:28px;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1"
            y="1991.9193"
            x="-435.9187"
@@ -235,7 +262,10 @@
          y="1991.9193"
          x="-8.3806076"
          style="font-size:36px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-         xml:space="preserve"><tspan
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            style="font-size:28px;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1"
            y="1991.9193"
            x="-8.3806076"
@@ -257,7 +287,10 @@
          y="1991.9193"
          x="419.15735"
          style="font-size:36px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-         xml:space="preserve"><tspan
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            style="font-size:28px;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1"
            y="1991.9193"
            x="419.15735"
@@ -279,7 +312,10 @@
          y="1991.9193"
          x="846.25598"
          style="font-size:36px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-         xml:space="preserve"><tspan
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            style="font-size:28px;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1"
            y="1991.9193"
            x="846.25598"
@@ -295,196 +331,282 @@
            y="2046.8588"
            x="846.25598"
            sodipodi:role="line">End of iteration</tspan></text>
-      <g
-         id="g6856">
-        <rect
-           style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985"
-           width="263.02927"
-           height="56.002857"
-           x="-399.76205"
-           y="1489.4395"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-           x="-268.66931"
+      <rect
+         ry="2"
+         rx="2"
+         y="1489.4395"
+         x="-399.76205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985"
+         style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261"
+         y="1530.8618"
+         x="-268.66931"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1530.8618"
-           id="text5261"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263"
-             x="-268.66931"
-             y="1530.8618">Reference 1</tspan></text>
-        <rect
-           style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-3"
-           width="263.02927"
-           height="56.002857"
-           x="-399.76205"
-           y="1577.1989"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="-268.66931"
+           id="tspan5263"
+           sodipodi:role="line">Reference 1</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1577.1989"
+         x="-399.76205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-3"
+         style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-8"
+         y="1618.6212"
+         x="-268.66931"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1618.6212"
-           id="text5261-8"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-1"
-             x="-268.66931"
-             y="1618.6212">Reference 2</tspan></text>
-        <rect
-           style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-31"
-           width="263.02927"
-           height="56.002857"
-           x="-399.76205"
-           y="1664.9581"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="-268.66931"
+           id="tspan5263-1"
+           sodipodi:role="line">Reference 2</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1664.9581"
+         x="-399.76205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-31"
+         style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-4"
+         y="1706.3805"
+         x="-268.66931"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1706.3805"
-           id="text5261-4"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-18"
-             x="-268.66931"
-             y="1706.3805">Reference 3</tspan></text>
-        <rect
-           style="color:#000000;fill:#aa0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-31-7"
-           width="263.02927"
-           height="56.002857"
-           x="-399.76205"
-           y="1752.7175"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="-268.66931"
+           id="tspan5263-18"
+           sodipodi:role="line">Reference 3</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1752.7175"
+         x="-399.76205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-31-7"
+         style="color:#000000;fill:#aa0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-4-7"
+         y="1794.1398"
+         x="-268.66931"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1794.1398"
-           id="text5261-4-7"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-18-9"
-             x="-268.66931"
-             y="1794.1398">Reference 4</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+           x="-268.66931"
+           id="tspan5263-18-9"
+           sodipodi:role="line">Reference 4</tspan></text>
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text6775"
+         y="1447.0491"
+         x="-381.35278"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
+           id="tspan6779"
+           y="1447.0491"
            x="-381.35278"
-           y="1447.0491"
-           id="text6775"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             x="-381.35278"
-             y="1447.0491"
-             id="tspan6779">Reference list</tspan></text>
-      </g>
-      <g
-         id="g6872">
-        <rect
-           style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-7"
-           width="263.02927"
-           height="56.002857"
-           x="27.776024"
-           y="1489.4395"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-           x="158.86876"
+           sodipodi:role="line">Reference list</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1491.3252"
+         x="1229.1575"
+         height="56.002857"
+         width="56.002998"
+         id="rect2985-31-7-5"
+         style="color:#000000;fill:#aa0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <rect
+         ry="2"
+         rx="2"
+         y="1579.0846"
+         x="1229.1575"
+         height="56.002857"
+         width="56.002998"
+         id="rect2985-31-3"
+         style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <rect
+         ry="2"
+         rx="2"
+         y="1489.4395"
+         x="27.776024"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-7"
+         style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-5"
+         y="1530.8618"
+         x="158.86876"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1530.8618"
-           id="text5261-5"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-5"
-             x="158.86876"
-             y="1530.8618">Reference 1</tspan></text>
-        <rect
-           style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-3-9"
-           width="263.02927"
-           height="56.002857"
-           x="27.776024"
-           y="1577.1989"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="158.86876"
+           id="tspan5263-5"
+           sodipodi:role="line">Reference 1</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1577.1989"
+         x="27.776024"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-3-9"
+         style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-8-9"
+         y="1618.6212"
+         x="158.86876"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1618.6212"
-           id="text5261-8-9"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-1-8"
-             x="158.86876"
-             y="1618.6212">Reference 2</tspan></text>
-        <rect
-           style="color:#000000;fill:#aa0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-31-0"
-           width="263.02927"
-           height="56.002857"
-           x="27.776024"
-           y="1664.9581"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="158.86876"
+           id="tspan5263-1-8"
+           sodipodi:role="line">Reference 2</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1664.9581"
+         x="27.776024"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-31-0"
+         style="color:#000000;fill:#aa0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-4-1"
+         y="1706.3805"
+         x="158.86876"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1706.3805"
-           id="text5261-4-1"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-18-7"
-             x="158.86876"
-             y="1706.3805">Reference 3</tspan></text>
-        <rect
-           style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-31-7-1"
-           width="263.02927"
-           height="56.002857"
-           x="27.775963"
-           y="1752.7175"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="158.86876"
+           id="tspan5263-18-7"
+           sodipodi:role="line">Reference 3</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1752.7175"
+         x="27.775963"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-31-7-1"
+         style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-4-7-2"
+         y="1794.1399"
+         x="158.86876"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1794.1399"
-           id="text5261-4-7-2"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-18-9-1"
-             x="158.86876"
-             y="1794.1399">Reference 4</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-           x="48.76722"
+           x="158.86876"
+           id="tspan5263-18-9-1"
+           sodipodi:role="line">Reference 4</tspan></text>
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text6775-0"
+         y="1447.0491"
+         x="48.76722"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
+           id="tspan6779-4"
            y="1447.0491"
-           id="text6775-0"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             x="48.76722"
-             y="1447.0491"
-             id="tspan6779-4">Reference list</tspan></text>
-      </g>
+           x="48.76722"
+           sodipodi:role="line">Reference list</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1666.8439"
+         x="1229.1575"
+         height="56.002857"
+         width="56.002998"
+         id="rect2985-31-7-1-3"
+         style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
       <g
-         id="g6888">
+         id="g6888"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150">
         <rect
            style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="rect2985-2"
@@ -577,100 +699,164 @@
              y="1447.0491"
              id="tspan6779-9">Reference list</tspan></text>
       </g>
-      <g
-         id="g6904">
-        <rect
-           style="color:#000000;fill:#aa0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-8"
-           width="263.02927"
-           height="56.002857"
-           x="882.85205"
-           y="1491.3252"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-           x="1013.9448"
+      <rect
+         ry="2"
+         rx="2"
+         y="1491.3252"
+         x="882.85205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-8"
+         style="color:#000000;fill:#aa0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-7"
+         y="1532.7476"
+         x="1013.9448"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1532.7476"
-           id="text5261-7"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-19"
-             x="1013.9448"
-             y="1532.7476">Reference 1</tspan></text>
-        <rect
-           style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-3-2"
-           width="263.02927"
-           height="56.002857"
-           x="882.85205"
-           y="1579.0846"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="1013.9448"
+           id="tspan5263-19"
+           sodipodi:role="line">Reference 1</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1579.0846"
+         x="882.85205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-3-2"
+         style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-8-2"
+         y="1620.507"
+         x="1013.9448"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1620.507"
-           id="text5261-8-2"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-1-7"
-             x="1013.9448"
-             y="1620.507">Reference 2</tspan></text>
-        <rect
-           style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-31-6"
-           width="263.02927"
-           height="56.002857"
-           x="882.85205"
-           y="1666.8439"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="1013.9448"
+           id="tspan5263-1-7"
+           sodipodi:role="line">Reference 2</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1666.8439"
+         x="882.85205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-31-6"
+         style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-4-11"
+         y="1708.2662"
+         x="1013.9448"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1708.2662"
-           id="text5261-4-11"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-18-97"
-             x="1013.9448"
-             y="1708.2662">Reference 3</tspan></text>
-        <rect
-           style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect2985-31-7-7"
-           width="263.02927"
-           height="56.002857"
-           x="882.85205"
-           y="1754.6031"
-           rx="2"
-           ry="2" />
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
            x="1013.9448"
+           id="tspan5263-18-97"
+           sodipodi:role="line">Reference 3</tspan></text>
+      <rect
+         ry="2"
+         rx="2"
+         y="1754.6031"
+         x="882.85205"
+         height="56.002857"
+         width="263.02927"
+         id="rect2985-31-7-7"
+         style="opacity:0.2;color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text5261-4-7-9"
+         y="1796.0255"
+         x="1013.9448"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
            y="1796.0255"
-           id="text5261-4-7-9"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             id="tspan5263-18-9-8"
-             x="1013.9448"
-             y="1796.0255">Reference 4</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
-           x="903.84326"
+           x="1013.9448"
+           id="tspan5263-18-9-8"
+           sodipodi:role="line">Reference 4</tspan></text>
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text6775-74"
+         y="1447.0491"
+         x="903.84326"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
+           id="tspan6779-6"
            y="1447.0491"
-           id="text6775-74"
-           sodipodi:linespacing="131.99999%"><tspan
-             sodipodi:role="line"
-             x="903.84326"
-             y="1447.0491"
-             id="tspan6779-6">Reference list</tspan></text>
-      </g>
+           x="903.84326"
+           sodipodi:role="line">Reference list</tspan></text>
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text6775-74-7"
+         y="1529.7651"
+         x="1303.736"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
+           id="tspan6779-6-6"
+           y="1529.7651"
+           x="1303.736"
+           sodipodi:role="line">Subject</tspan></text>
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text6775-74-3"
+         y="1617.5245"
+         x="1303.736"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-filename="/home/adrien/Programming/Python/Refeed/fig/text6775-74-1.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
+           id="tspan6779-6-1"
+           y="1617.5245"
+           x="1303.736"
+           sodipodi:role="line">Queries</tspan></text>
+      <text
+         sodipodi:linespacing="131.99999%"
+         id="text6775-74-1"
+         y="1705.2838"
+         x="1303.736"
+         style="font-size:28px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:131.99999332%;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150"><tspan
+           id="tspan6779-6-2"
+           y="1705.2838"
+           x="1303.736"
+           sodipodi:role="line">Ignored</tspan></text>
     </g>
   </g>
 </svg>
