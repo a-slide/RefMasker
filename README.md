@@ -1,4 +1,4 @@
-# RefMasker
+﻿# RefMasker
 
 **Hard mask homologies between fasta reference sequences identified by Blastn**
 
@@ -12,28 +12,24 @@
 
 ## Motivation
 
-RefMasker is a **python2.7** object oriented script that was developed in order to attribute more correctly short sequencing reads obtained from a mix of sequences whose abundance is highly unbalanced. Indeed, a rare sequence with large sequence homologies with a much frequent one can results in possible misattributions of reads to the rarest sequence and thus, a large overestimation of this sequence.
-
-This program can find sequence homologies of a list of reference fasta files. The order of references is **CRITICAL** since the last reference will be masked by all the others, then the penultimate will masked by all the sequence listed before and and so on until there is only one reference remaining.
-
+RefMasker is a **python2.7** object oriented script that was developed in order to attribute more correctly short sequencing reads obtained from a mix of reference sequences whose abundance is highly unbalanced. Indeed, a rare reference with sequence homologies with a much frequent reference can result in possible misattributions of reads to the rarest sequence and thus, a large overestimation of this sequence.
 
 ## Principle
 
-1. Users can generate a template configuration file and fill it acording to its requirements. The order of references indicated in the configuration file is **CRITICAL** since it will determine the order
-in which sequences will be masker thereafter.
+1. Users can generate a template configuration file and fill it according to their requirements. The order of references indicated in the configuration file is **CRITICAL** since it will determine the order in which sequences will be masker thereafter.
 2. The configuration file containing all program parameters (including reference fasta location) is parsed and verified for validity.
-3. Following the same order than the one indicated in the configuration file, reference fasta files are uncompressed (if needed) parsed, and indexed using a memory maping.
-4. An iterative masking is perform starting from the last reference (**subject**) against the references listed before (**queries**). For each new iteration the **subject** becomes the penultimate reference from the previous iteration which is also removed from the **queries** (see figure below)
-5. When the list of queries is empty the iteration stops
-6. Depending of the user requierments, a simple and a detailed reports can be generated 
+3. Following the order indicated in the configuration file, reference fasta files are uncompressed (if needed), parsed, and indexed using a memory mapping.
+4. An iterative masking is performed, starting from the last reference (**subject**) against all the references listed before (**queries**). For each new iteration the penultimate reference from the previous iteration becomes the **subject** and is removed from the **queries** (see figure below).
+5. When the list of queries is empty the iteration stops.
+6. Depending of the user requirements, blast and masking reports are generated.
 
 ![RefMasker_iteration](https://raw.githubusercontent.com/a-slide/RefMasker/master/fig/RefMasker_iteration.png)
 
 **Details of iterations**
     
-* Hits between the subject and the queries are found using a wrapper of NCBI Blast+ ([pyBlast submodule](http://a-slide.github.io/pyBlast))
-* If hit(s) were found, the program writes a masked version of the subject reference where each positions of the subject overlapping hits is replaced by N bases (hard masking).
-* Temporary directories are cleaned and the subject is removed from the reference list.
+* Imperfect matches between the subject and the queries are found using a wrapper of NCBI Blast+ ([pyBlast submodule](http://a-slide.github.io/pyBlast))
+* If matches were found, the program writes a masked version of the subject reference where each positions of the subject overlapping hits is replaced by a 'N' base (hard masking).
+* The subject reference is removed from the reference list.
 
 ## Dependencies
 
@@ -85,10 +81,10 @@ RefMasker.py -c Quade_conf_file.txt
 
 ## Testings
 
-The module can be easily tested thanks to pytest. It will also test the pyBlast submodule.
+The module can be easily tested thanks to [pytest](http://pytest.org/latest/). It will also test the pyBlast submodule.
 
 * Install pytest with pip `pip install pytest`
-* Run test with py.test-2.7  -v
+* Run test with py.test-2.7 -v
 
 Example of output if successful. Please note than some tests might fail due to the random sampling of DNA sequences, and uncertainties of Blastn algorithm.
 
