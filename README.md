@@ -27,7 +27,7 @@ in which sequences will be masker thereafter.
 5. When the list of queries is empty the iteration stops
 6. Depending of the user requierments, a simple and a detailed reports can be generated 
 
-![RefMasker_iteration](https://raw.githubusercontent.com/a-slide/RefMasker/master/fig/RefMasker_iteration.svg)
+![RefMasker_iteration](https://raw.githubusercontent.com/a-slide/RefMasker/master/fig/RefMasker_iteration.png)
 
 **Details of iterations**
     
