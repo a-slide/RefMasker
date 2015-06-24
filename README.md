@@ -1,77 +1,151 @@
 # RefMasker
 
-**Hard mask homologies between fasta reference sequences identified by blast**
+**Hard mask homologies between fasta reference sequences identified by Blastn**
 
 ---
 
 **Creation : 2015/06/08**
 
-**Last update : 2015/06/08**
+**Last update : 2015/06/24**
 
 ---
 
 ## Motivation
 
-RefMasker is a **python2.7** object oriented script that was developed in order to attribute more correctly short sequencing reads obtained from a mix of sequences whose abundance is highly unbalance. Indeed, a rare sequence with large sequence homologies with a much frequent one can results in possible misattribution of reads to the rarest sequence and thus, a large overestimation of this sequence.
+RefMasker is a **python2.7** object oriented script that was developed in order to attribute more correctly short sequencing reads obtained from a mix of sequences whose abundance is highly unbalanced. Indeed, a rare sequence with large sequence homologies with a much frequent one can results in possible misattributions of reads to the rarest sequence and thus, a large overestimation of this sequence.
+
 This program can find sequence homologies of a list of reference fasta files. The order of references is **CRITICAL** since the last reference will be masked by all the others, then the penultimate will masked by all the sequence listed before and and so on until there is only one reference remaining.
 
-![RefMasker_iteration](https://raw.githubusercontent.com/a-slide/RefMasker/master/fig/RefMasker_iteration.svg)
 
 ## Principle
 
-1. A configuration file containing all program parameters (including reference fasta location) is parsed and verified for validity.
-2. Reference fasta references are parsed ..............................
-3. 
+1. Users can generate a template configuration file and fill it acording to its requirements. The order of references indicated in the configuration file is **CRITICAL** since it will determine the order
+in which sequences will be masker thereafter.
+2. The configuration file containing all program parameters (including reference fasta location) is parsed and verified for validity.
+3. Following the same order than the one indicated in the configuration file, reference fasta files are uncompressed (if needed) parsed, and indexed using a memory maping.
+4. An iterative masking is perform starting from the last reference (**subject**) against the references listed before (**queries**). For each new iteration the **subject** becomes the penultimate reference from the previous iteration which is also removed from the **queries** (see figure below)
+5. When the list of queries is empty the iteration stops
+6. Depending of the user requierments, a simple and a detailed reports can be generated 
+
+![RefMasker_iteration](https://raw.githubusercontent.com/a-slide/RefMasker/master/fig/RefMasker_iteration.svg)
+
+**Details of iterations**
+    
+* Hits between the subject and the queries are found using a wrapper of NCBI Blast+ ([pyBlast submodule](http://a-slide.github.io/pyBlast))
+* If hit(s) were found, the program writes a masked version of the subject reference where each positions of the subject overlapping hits is replaced by N bases (hard masking).
+* Temporary directories are cleaned and the subject is removed from the reference list.
 
 ## Dependencies
 
 The program was developed under Linux Mint 17 and was not tested with other OS.
+
 In addition to python2.7 the following dependencies are required for proper program execution:
 
+* [ncbi blast+](http://blast.ncbi.nlm.nih.gov.gate2.inist.fr/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download) 2.2.28+
+
+Install blast with your favorite package manager (ex: `sudo apt-get install ncbi-blast+`) 
+
 * python package [pyfasta](https://github.com/brentp/pyfasta/) 0.5.2 +
-* python package [pytest](
 
-If you have pip already installed, enter the following line to install packages: ```sudo pip install pyfasta```
+Install pip with your favorite package manager and enter the following line to install pyfasta: `sudo pip install pyfasta`
 
+## Get and install
 
-## Get and install Quade
+* Clone the repository in **recursive mode** to download the main repo and its submodules `git clone --recursive https://github.com/a-slide/RefMasker.git`
 
-* Clone the repository in **recursive mode** to download the main repo and its submodules ```git clone --recursive https://github.com/a-slide/RefMasker.git```
-
-* Enter the src folder of the program folder and make the main script executable ```sudo chmod u+x RefMasker.py```
+* Enter the src folder of the program folder and make the main script executable `sudo chmod u+x RefMasker.py`
 
 * Finally, add RefMasker.py to your PATH
 
 ## Usage
 
 In the folder where files will be created
-    
-    Usage: RefMasker.py -c Conf.txt [-i -h]
-    
-    Options:
-      --version     show program's version number and exit
-      -h, --help    show this help message and exit
-      -c CONF_FILE  Path to the configuration file [Mandatory]
-      -i            Generate an example configuration file and exit [Facultative]
-      
+
+```
+Usage: RefMasker.py -c Conf.txt [-i -h]
+
+Options:
+  --version     show program's version number and exit
+  -h, --help    show this help message and exit
+  -c CONF_FILE  Path to the configuration file [Mandatory]
+  -i            Generate an example configuration file and exit [Facultative]
+```
+  
 An example configuration file can be generated by running the program with the option -i
+
 The possible options are extensively described in the configuration file.
+
 The program can be tested from the test folder with the dataset provided and the default configuration file.
+
 ```
 cd ./test/result
 RefMasker.py -i
 RefMasker.py -c Quade_conf_file.txt
-
 ```
+
 ## Testings
 
-Unit testing can be performed
+The module can be easily tested thanks to pytest. It will also test the pyBlast submodule.
+
+* Install pytest with pip `pip install pytest`
+* Run test with py.test-2.7  -v
+
+Example of output if successful. Please note than some tests might fail due to the random sampling of DNA sequences, and uncertainties of Blastn algorithm.
+
+```
+========================================================================= test session starts =========================================================================
+platform linux2 -- Python 2.7.5 -- py-1.4.27 -- pytest-2.7.0 -- /usr/bin/python
+rootdir: /home/adrien/Programming/Python/Refeed/src, inifile: 
+collected 39 items 
+
+test_RefMasker.py::test_Sequence_create PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-110-0-0--0-0-0-0-] xfail
+test_RefMasker.py::test_Sequence_add_hit[100-seq_1-80-100-0-0--0-0-0-0-] xfail
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-80-90-20-30-ATCG-79-90-19-30-ATCG] PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-80-20-30-ATCG-79-90-19-30-CGAT] PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-80-90-30-20-ATCG-79-90-19-30-CGAT] PASSED
+test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-80-30-20-ATCG-79-90-19-30-ATCG] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_1[100-1] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_1[100-5] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_1[200-10] PASSED
+test_RefMasker.py::test_Sequence_output_sequence_2 PASSED
+test_RefMasker.py::test_Reference_create[1-1000-1-False] PASSED
+test_RefMasker.py::test_Reference_create[1-1000-1-True] PASSED
+test_RefMasker.py::test_Reference_create[2-10000-2-False] PASSED
+test_RefMasker.py::test_Reference_create[2-10000-2-True] PASSED
+test_RefMasker.py::test_Reference_add_hit_list[1-1000-1] PASSED
+test_RefMasker.py::test_Reference_add_hit_list[2-10000-2] PASSED
+test_RefMasker.py::test_Reference_output_masked_reference PASSED
+pyBlast/test_pyBlast.py::test_BlastHit[36.9133828132-88-75-85-47-98-88-14-8.78046725086-92.5815421121] PASSED
+pyBlast/test_pyBlast.py::test_BlastHit[-1-19-100-17-17-54-53-33-79.1465130808-41.6977101708] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[65.8976266941--1-46-9-74-59-97-56-59.2270229149-93.0689987714] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[75.9701897823-71--1-26-16-91-16-82-5.78377016797-79.1291574854] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[80.9394959784-54-85--1-5-78-33-35-8.3011500976-53.4993883036] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[35.5821954158-26-23-29--1-69-35-57-47.706286329-4.1842760318] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[52.9290346724-31-3-44-74--1-30-76-36.6917151434-43.8870409292] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[16.7597390274-26-0-37-100-15--1-91-89.8637578655-63.9053323995] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[94.5094431806-49-70-48-9-39-80--1-72.722423521-98.7208732416] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[44.4349347822-84-83-96-49-59-16-9--1-91.9302274501] xfail
+pyBlast/test_pyBlast.py::test_BlastHit[77.9794166482-19-89-79-33-46-9-26-21.2569521087--1] xfail
+pyBlast/test_pyBlast.py::test_Blastn[blastn-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[blastn-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[blastn-short-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[blastn-short-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[dc-megablast-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[dc-megablast-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[megablast-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[megablast-Random queries] xfail
+pyBlast/test_pyBlast.py::test_Blastn[rmblastn-Queries from Subject] PASSED
+pyBlast/test_pyBlast.py::test_Blastn[rmblastn-Random queries] xfail
+
+================================================================ 22 passed, 17 xfailed in 7.02 seconds ================================================================
+```
 
 ## Authors and Contact
 
 Adrien Leger - 2015
 
 * <adrien.leger@gmail.com> - <adrien.leger@inserm.fr> - <adrien.leger@univ-nantes.fr>
-* [Github](https://github.com/a-slide)
+* [a-slide](https://github.com/a-slide) at Github
 * [Atlantic Gene Therapies - INSERM 1089](http://www.atlantic-gene-therapies.fr/)
 * [Drowned in genomics](http://a-slide.github.io/)
