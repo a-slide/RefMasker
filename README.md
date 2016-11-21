@@ -139,9 +139,5 @@ pyBlast/test_pyBlast.py::test_Blastn[rmblastn-Random queries] xfail
 
 ## Authors and Contact
 
-Adrien Leger - 2015
-
-* <adrien.leger@gmail.com> - <adrien.leger@inserm.fr> - <adrien.leger@univ-nantes.fr>
-* [a-slide](https://github.com/a-slide) at Github
-* [Atlantic Gene Therapies - INSERM 1089](http://www.atlantic-gene-therapies.fr/)
-* [Drowned in genomics](http://a-slide.github.io/)
+* Adrien Leger <aleg@ebi.ac.uk> @a-slide
+* Emilie Lecomte <emilie.lecomte@univ-nantes.fr> @emlec
