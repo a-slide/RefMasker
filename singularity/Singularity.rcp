@@ -1,0 +1,41 @@
+Bootstrap: docker
+From: python:latest
+
+%help
+
+  """
+  Singularity Image for RefMasker.
+  See https://github.com/emlec/RefMasker for help.
+  """
+
+%labels
+
+  Maintainer Université de Nantes / Genevia Technologies Ltd
+  Licence GNU General Public License v2.0
+  Version 1.0
+
+%environment
+
+  export REFMASKERVERSION='RefMasker: 1.0'
+
+%post
+
+  apt-get update -y
+  # Install RefMasker dependancies
+  apt install -y ncbi-blast+
+  # Install python packages
+  pip install numpy==1.21.4
+  pip install pyfasta==0.5.2
+
+#Versions checks
+%appenv versions
+
+  export BLASTVERSION='BLAST: '$(blastn -version | grep "Package: blast" | sed 's/ Package: blast //' | sed 's/, build Feb  1 2021 02:23:21//')
+  export PYFASTAVERSION='pyfasta: '$(pip list | grep "pyfasta" | sed 's/pyfasta //')
+
+%apprun versions
+
+  echo $REFMASKERVERSION
+  echo 'Dependencies versions:'
+  echo $BLASTVERSION
+  echo $PYFASTAVERSION
