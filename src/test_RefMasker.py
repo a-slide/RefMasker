@@ -82,7 +82,7 @@ class defined_fasta (object):
         self.temp_dir = mkdtemp()
         self.fasta_path = path.join(self.temp_dir+"/defined.fa")
         with open (self.fasta_path, "w") as fp:
-            for name, seq in self.seq_dict.items():
+            for name, seq in list(self.seq_dict.items()):
                 fp.write (">{}\n{}\n".format(name, seq))
 
     def __enter__(self):
@@ -100,7 +100,7 @@ def yield_sequence(len_seq=500, n_seq=1):
     with rand_fasta(len_seq, n_seq) as r:
         print ("Create a pyfasta record")
         pyfasta_Fasta = pyfasta.Fasta(r.fasta_path, flatten_inplace=True)
-        for name, seq_record in pyfasta_Fasta.items():
+        for name, seq_record in list(pyfasta_Fasta.items()):
             yield Sequence(name = name, seq_record = seq_record)
 
 @pytest.yield_fixture
@@ -195,10 +195,10 @@ def test_Sequence_output_sequence_1 (len_seq, n_hit):
         assert sequence.output_sequence() != str(sequence.seq_record)
 
         # For visual confirmation of proper masking
-        print (sequence.seq_record)
-        print (sequence.output_sequence())
+        print((sequence.seq_record))
+        print((sequence.output_sequence()))
         for hit in hit_list:
-            print (" "*hit.s_start+hit.q_seq)
+            print((" "*hit.s_start+hit.q_seq))
 
 def test_Sequence_output_sequence_2 ():
     """
@@ -209,16 +209,16 @@ def test_Sequence_output_sequence_2 ():
         for hit in hit_list:
             sequence.add_hit(hit)
 
-        for i, j in sequence.get_report().items():
-            print ("{}\t{}".format(i,j))
+        for i, j in list(sequence.get_report().items()):
+            print(("{}\t{}".format(i,j)))
 
         masked_sequence = (sequence.output_sequence())
 
         # For visual confirmation of proper masking
-        print (sequence.seq_record)
+        print((sequence.seq_record))
         print (masked_sequence)
         for hit in hit_list:
-            print (" "*hit.s_start+hit.q_seq)
+            print((" "*hit.s_start+hit.q_seq))
 
         # Verify than all hit coordinates on subject query are properly masked
         for hit in hit_list:
@@ -258,7 +258,7 @@ def test_Reference_add_hit_list(n_ref, len_seq, n_seq):
 
         ref.add_hit_list(hit_list)
 
-        for name, n_hit in seq_dict.items():
+        for name, n_hit in list(seq_dict.items()):
             assert ref.seq_dict[name].n_hit == n_hit
 
         #ref.output_masked_reference(compress=False)

@@ -18,7 +18,7 @@ from tempfile import mkdtemp
 from multiprocessing import cpu_count
 
 # Local library packages
-from BlastHit import BlastHit
+from .BlastHit import BlastHit
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Blastn(object):
@@ -60,7 +60,7 @@ class Blastn(object):
             self.ref_path, self.db_path)
 
         if self.verbose:
-            print ("CREATE DATABASE: {}\n".format(cmd))
+            print(("CREATE DATABASE: {}\n".format(cmd)))
             
         # Run the command line without stdin and asking both stdout and stderr
         try:
@@ -94,7 +94,7 @@ class Blastn(object):
     def __str__(self):
         msg = "MAKEBLASTDB CLASS\tParameters list\n"
         # list all values in object dict in alphabetical order
-        keylist = [key for key in self.__dict__.keys()]
+        keylist = [key for key in list(self.__dict__.keys())]
         keylist.sort()
         for key in keylist:
             msg+="\t{}\t{}\n".format(key, self.__dict__[key])
@@ -125,7 +125,7 @@ class Blastn(object):
             blastn_exec, blastn_opt, cpu_count(), task, evalue, query_path, self.db_path)
         
         if self.verbose:
-            print ("MAKE BLAST: {}\n".format(cmd))
+            print(("MAKE BLAST: {}\n".format(cmd)))
         # Execute the command line in the default shell
         proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
         stdout, stderr = proc.communicate()
@@ -150,7 +150,7 @@ class Blastn(object):
                 hit_list.append(BlastHit(*hit_split))
 
             if self.verbose:
-                print ("\t{} hits found".format(len(hit_list)))
+                print(("\t{} hits found".format(len(hit_list))))
             return hit_list
 
         # The most complicated situation where only the best hit per query is returned
@@ -167,11 +167,11 @@ class Blastn(object):
                 hit_dict[query_id] = [BlastHit(*hit_split)]
 
         if self.verbose:
-            print ("\t{} hits found from {} query".format(i, len(hit_dict)))
+            print(("\t{} hits found from {} query".format(i, len(hit_dict))))
 
         # Flatten the dictionary in a list keeping only the best alignment per query
         hit_list = []
-        for query_hits in hit_dict.values():
+        for query_hits in list(hit_dict.values()):
             best_evalue = 100 # Start with a very high evalue
             best_hit = None # and no hit
             for hit in query_hits:
@@ -181,10 +181,10 @@ class Blastn(object):
             hit_list.append(best_hit)
 
         if self.verbose:
-            print ("\t{} hits retained".format(len(hit_list)))
+            print(("\t{} hits retained".format(len(hit_list))))
         return hit_list
 
     def rm_db(self):
         if self.verbose:
-            print (" * Cleaning up blast DB files for \"{}\"".format(self.db_basename))
+            print((" * Cleaning up blast DB files for \"{}\"".format(self.db_basename)))
         rmtree(self.db_dir)

@@ -66,10 +66,10 @@ def gunzip (src, dst):
         dst = path.join(dst, file_name(src.rstrip(".gz")))
 
     # Try to initialize handle for the compressed file
-    with gopen(src, 'rb') as in_handle:
-        with open(dst, "wb") as out_handle:
+    with gopen(src, 'r') as in_handle:
+        with open(dst, "w") as out_handle:
         # Write input file in output file
-            out_handle.write (in_handle.read())
+            out_handle.write(in_handle.read().decode())
 
     return dst
 

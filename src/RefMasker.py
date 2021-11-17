@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -15,7 +15,7 @@
 
 try:
     # Standard library imports
-    import ConfigParser
+    import configparser
     import optparse
     import sys
     from os import R_OK, access
@@ -99,7 +99,7 @@ class RefMasker(object):
             self.conf = conf_file
 
             # Define a configuration file parser object and load the configuration file
-            cp = ConfigParser.RawConfigParser(allow_no_value=True)
+            cp = configparser.RawConfigParser(allow_no_value=True)
             cp.read(self.conf)
 
             print(" * Parse output options")
@@ -130,22 +130,22 @@ class RefMasker(object):
                         compress = self.compress_output))
 
         # Handle the many possible errors occurring during conf file parsing or variable test
-        except (ConfigParser.NoOptionError, ConfigParser.NoSectionError) as E:
-            print ("Option or section missing. Report to the template configuration file\n" + E.message)
+        except (configparser.NoOptionError, configparser.NoSectionError) as E:
+            print(("Option or section missing. Report to the template configuration file\n" + E.message))
             sys.exit(1)
 
         except (ValueError, AssertionError) as E:
-            print ("One of the value in the configuration file is not correct\n" + E.message)
+            print(("One of the value in the configuration file is not correct\n" + E.message))
             sys.exit(1)
 
         except (IOError) as E:
-            print ("One of the file is incorrect or unreadable\n" + E.message)
+            print(("One of the file is incorrect or unreadable\n" + E.message))
             sys.exit(1)
 
     def __str__(self):
         msg = "RefMasker CLASS\n\tParameters list\n"
         # list all values in object dict in alphabetical order
-        keylist = [key for key in self.__dict__.keys()]
+        keylist = [key for key in list(self.__dict__.keys())]
         keylist.sort()
         for key in keylist:
             msg+="\t{}\t{}\n".format(key, self.__dict__[key])
@@ -171,14 +171,14 @@ class RefMasker(object):
                 subject = self.reference_list[i]
                 query_list = self.reference_list[0:i]
 
-                print ("\nProcessing Reference \"{}\"".format(subject.name))
+                print(("\nProcessing Reference \"{}\"".format(subject.name)))
 
                 # Create a blast database for the current subject sequence
                 with Blastn(ref_path=subject.fasta, makeblastdb_exec=self.makeblastdb_exec) as blastn:
 
                     # Blast each query file of the query list against the subject
                     for query in query_list:
-                        print (" * Blast against \"{}\"".format(query.name))
+                        print((" * Blast against \"{}\"".format(query.name)))
 
                         # Save the list of hit in a local variable
                         hit_list = blastn (
@@ -190,7 +190,7 @@ class RefMasker(object):
 
                         # Add the hit of list found to the subject
                         if hit_list:
-                            print("   * {} hit(s) found".format(len(hit_list)))
+                            print(("   * {} hit(s) found".format(len(hit_list))))
                             subject.add_hit_list(hit_list)
 
                         else:
@@ -199,7 +199,7 @@ class RefMasker(object):
                 # if hits were found output the new fasta file in the current folder
                 if subject.n_hit:
                     print (" * Write a modified reference fasta file in the current directory")
-                    subject.output_reference ()
+                    subject.output_reference()
                 else:
                     print (" * Reference file unmodified")
 
@@ -223,7 +223,7 @@ class RefMasker(object):
         # Catch possible exceptions
         except Exception as E:
             print ("ERROR during execution of RefMasker")
-            print (E.message)
+            print(E)
 
         # Even in case of exception this block will  be executed to remove temporary files
         finally:
@@ -231,7 +231,7 @@ class RefMasker(object):
             for ref in self.reference_list:
                 ref.clean()
 
-            print ("\nDone in {}s".format(round(time()-start_time, 3)))
+            print(("\nDone in {}s".format(round(time()-start_time, 3))))
             return(0)
 
     #~~~~~~~PRIVATE METHODS~~~~~~~#
@@ -241,7 +241,7 @@ class RefMasker(object):
         Recursive function to return a text report from nested dict or OrderedDict objects
         """
         report = ""
-        for name, value in d.items():
+        for name, value in list(d.items()):
             if type(value) == OrderedDict or type(value) == dict:
                 report += "{}{}\n".format(tab, name)
                 report += self._dict_to_report(value, tab=tab+"\t")

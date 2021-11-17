@@ -56,7 +56,7 @@ class Reference(object):
         @param fasta    Path to a fasta file (can be gzipped)
         @param compress Fasta output will be gzipped if True
         """
-        print ("Create {} object".format(name))
+        print(("Create {} object".format(name)))
         # Create self variables
         self.name = name
         self.temp_dir = mkdtemp()
@@ -84,9 +84,9 @@ class Reference(object):
             print (" * Parsing the file with pyfasta")
             seq_dict = {}
             fasta_record = pyfasta.Fasta(self.fasta, flatten_inplace=True)
-            print (" * Found {} sequences in {}".format (len (fasta_record), self.name))
+            print((" * Found {} sequences in {}".format (len (fasta_record), self.name)))
 
-            for name, seq_record in fasta_record.items():
+            for name, seq_record in list(fasta_record.items()):
 
                 # Remove additional sequence descriptor in fasta header and create a Sequence object
                 short_name = name.partition(" ")[0]
@@ -94,7 +94,7 @@ class Reference(object):
                 seq_dict[short_name] = Sequence(name=short_name, seq_record=seq_record)
 
             # Save to a name sorted ordered dict
-            self.seq_dict = OrderedDict(sorted(seq_dict.items(), key=lambda x: x))
+            self.seq_dict = OrderedDict(sorted(list(seq_dict.items()), key=lambda x: x))
 
             # Add name to a class list
             self.ADD_TO_REFERENCE_NAMES(self.name)
@@ -119,7 +119,7 @@ class Reference(object):
         msg+= "  Fasta path: {}\n".format(self.fasta)
         msg+= "  Number of sequences: {}\n".format(self.n_seq)
         msg+= "  Number of hit(s) in sequences: {}\n".format(self.n_hit)
-        for s in self.seq_dict.values():
+        for s in list(self.seq_dict.values()):
             msg+= "    Name: {}\tSeq: {}...\tNumber of hits: {}\n".format(
                 s.name, s.seq_record[0:10], len(s.hit_list))
         return (msg)
@@ -132,7 +132,7 @@ class Reference(object):
     @property
     def n_hit(self ):
         """Count the number of hits in all the Sequences of the Reference"""
-        return sum([sequence.n_hit for sequence in self.seq_dict.values()])
+        return sum([sequence.n_hit for sequence in list(self.seq_dict.values())])
 
     @property
     def n_seq(self ):
@@ -163,17 +163,17 @@ class Reference(object):
         # Write a new compressed reference in the current folder
         elif self.compress:
             with gopen (self.modified_fasta, "wb") as fasta:
-                for seq in self.seq_dict.values():
+                for seq in list(self.seq_dict.values()):
                     # Write the sequence in the fasta file
-                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
+                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()).encode())
             return self.modified_fasta
 
         # Write a new uncompressed reference in the current folder
         else:
-            with open (self.modified_fasta, "w") as fasta:
-                for seq in self.seq_dict.values():
+            with open (self.modified_fasta, "wb") as fasta:
+                for seq in list(self.seq_dict.values()):
                     # Write the sequence in the fasta file
-                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
+                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()).encode())
             return self.modified_fasta
 
     def get_report (self, full=False):
@@ -188,17 +188,17 @@ class Reference(object):
 
         # Include in report only if hit where found in the reference
         if self.n_hit:
-            report["Number of base(s) modified"] = sum([seq.mod_bases for seq in self.seq_dict.values()])
+            report["Number of base(s) modified"] = sum([seq.mod_bases for seq in list(self.seq_dict.values())])
             report["Modified fasta"] = self.modified_fasta
             report["Modified Sequences"] = OrderedDict ()
-            for seq in self.seq_dict.values():
+            for seq in list(self.seq_dict.values()):
                 if seq.hit_list:
                     report["Modified Sequences"][seq.name] = seq.get_report(full=full)
 
         return report
 
     def clean (self):
-        print (" * Cleaning up temporary files for the reference \"{}\"".format(self.name))
+        print((" * Cleaning up temporary files for the reference \"{}\"".format(self.name)))
         # Remove the temporary directory containing files generated during program execution
         rmtree(self.temp_dir)
         # Cleanup the self dictionary

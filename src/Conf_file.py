@@ -14,7 +14,7 @@
 
 def write_example_conf():
 
-    with open ("RefMasker_conf_file.txt", 'wb') as fp:
+    with open ("RefMasker_conf_file.txt", 'w') as fp:
         fp.write ("""
 ###################################################################################################
 #                                   REFEED CONFIGURATION FILE                                      #

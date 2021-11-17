@@ -25,8 +25,8 @@ import pytest
 sys.path.append(os.getcwd())
 
 # local package imports
-from BlastHit import BlastHit
-from Blastn import Blastn
+from .BlastHit import BlastHit
+from .Blastn import Blastn
 
 # HELPER FUNCTIONS AND CLASSES ####################################################################
 

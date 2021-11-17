@@ -39,7 +39,7 @@ class Sequence(object):
     def __str__(self):
         msg = "SEQUENCE CLASS\tParameters list\n"
         # list all values in object dict in alphabetical order
-        keylist = [key for key in self.__dict__.keys()]
+        keylist = [key for key in list(self.__dict__.keys())]
         keylist.sort()
         for key in keylist:
             msg+="\t{}\t{}\n".format(key, self.__dict__[key])
@@ -67,11 +67,11 @@ class Sequence(object):
         """
         # Hit cannot have borders outside the sequence size
         if hit.s_start > self.seq_len or hit.s_end > self.seq_len:
-            raise ValueError, ("Invalid hit: Outside of sequence borders")
+            raise ValueError(("Invalid hit: Outside of sequence borders"))
         if hit.s_id != self.name:
-            print hit.s_id
-            print self.name
-            raise ValueError, ("Invalid hit: hit subject name does not match Sequence name")
+            print(hit.s_id)
+            print(self.name)
+            raise ValueError(("Invalid hit: hit subject name does not match Sequence name"))
 
         # Reverse coordinates of the subject if the orientation of read is negative
         if hit.s_orient == "-":

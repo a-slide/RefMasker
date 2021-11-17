@@ -60,3 +60,5 @@ target/
 test/local_dataset/
 test/local_result/
 
+# Containers
+singularity/refmasker3
