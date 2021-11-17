@@ -131,15 +131,15 @@ class RefMasker(object):
 
         # Handle the many possible errors occurring during conf file parsing or variable test
         except (configparser.NoOptionError, configparser.NoSectionError) as E:
-            print(("Option or section missing. Report to the template configuration file\n" + E.message))
+            print(("Option or section missing. Report to the template configuration file\n" + E))
             sys.exit(1)
 
         except (ValueError, AssertionError) as E:
-            print(("One of the value in the configuration file is not correct\n" + E.message))
+            print(("One of the value in the configuration file is not correct\n" + E))
             sys.exit(1)
 
         except (IOError) as E:
-            print(("One of the file is incorrect or unreadable\n" + E.message))
+            print(("One of the file is incorrect or unreadable\n" + E))
             sys.exit(1)
 
     def __str__(self):

@@ -162,18 +162,18 @@ class Reference(object):
 
         # Write a new compressed reference in the current folder
         elif self.compress:
-            with gopen (self.modified_fasta, "wb") as fasta:
+            with gopen (self.modified_fasta, "wt") as fasta:
                 for seq in list(self.seq_dict.values()):
                     # Write the sequence in the fasta file
-                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()).encode())
+                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
             return self.modified_fasta
 
         # Write a new uncompressed reference in the current folder
         else:
-            with open (self.modified_fasta, "wb") as fasta:
+            with open (self.modified_fasta, "w") as fasta:
                 for seq in list(self.seq_dict.values()):
                     # Write the sequence in the fasta file
-                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()).encode())
+                    fasta.write(">{}\n{}\n".format(seq.name, seq.output_sequence()))
             return self.modified_fasta
 
     def get_report (self, full=False):
