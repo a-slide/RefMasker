@@ -6,13 +6,13 @@
 
 **Creation : 2015/06/08**
 
-**Last update : 2015/06/24**
+**Last update : 2021/11/16**
 
 ---
 
 ## Motivation
 
-RefMasker is a **python2.7** object oriented script that was developed in order to attribute more correctly short sequencing reads obtained from a mix of reference sequences whose abundance is highly unbalanced. Indeed, a rare reference with sequence homologies with a much frequent reference can result in possible misattributions of reads to the rarest sequence and thus, a large overestimation of this sequence.
+RefMasker is a **python3.8** object oriented script that was developed in order to attribute more correctly short sequencing reads obtained from a mix of reference sequences whose abundance is highly unbalanced. Indeed, a rare reference with sequence homologies with a much frequent reference can result in possible misattributions of reads to the rarest sequence and thus, a large overestimation of this sequence.
 
 ## Principle
 
@@ -31,31 +31,19 @@ RefMasker is a **python2.7** object oriented script that was developed in order 
 * If matches were found, the program writes a masked version of the subject reference where each positions of the subject overlapping hits is replaced by a 'N' base (hard masking).
 * The subject reference is removed from the reference list.
 
-## Dependencies
-
-The program was developed under Linux Mint 17 and was not tested with other OS.
-
-In addition to python2.7 the following dependencies are required for proper program execution:
-
-* [ncbi blast+](http://blast.ncbi.nlm.nih.gov.gate2.inist.fr/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download) 2.2.28+
-
-Install blast with your favorite package manager (ex: `sudo apt-get install ncbi-blast+`) 
-
-* python package [pyfasta](https://github.com/brentp/pyfasta/) 0.5.2 +
-
-Install pip with your favorite package manager and enter the following line to install pyfasta: `sudo pip install pyfasta`
-
 ## Get and install
 
-* Clone the repository in **recursive mode** to download the main repo and its submodules `git clone --recursive https://github.com/a-slide/RefMasker.git`
+* Clone the repository using `git clone https://github.com/emlec/RefMasker.git`
 
-* Enter the src folder of the program folder and make the main script executable `sudo chmod u+x RefMasker.py`
+* Refmasker runs in a Singularity container. Please install Singularity, if not already installed.
+You can then build RefMasker container using `sudo singularity build refmasker singularity/Singularity.rcp`
 
-* Finally, add RefMasker.py to your PATH
+* Refmasker can be used from within the container.
+To do so, start a shell in the container using `singularity shell refmasker`.
 
 ## Usage
 
-In the folder where files will be created
+In the folder where files will be created:
 
 ```
 Usage: RefMasker.py -c Conf.txt [-i -h]
@@ -77,64 +65,6 @@ The program can be tested from the test folder with the dataset provided and the
 cd ./test/result
 RefMasker.py -i
 RefMasker.py -c Quade_conf_file.txt
-```
-
-## Testings
-
-The module can be easily tested thanks to [pytest](http://pytest.org/latest/). It will also test the pyBlast submodule.
-
-* Install pytest with pip `pip install pytest`
-* Run test with py.test-2.7 -v
-
-Example of output if successful. Please note than some tests might fail due to the random sampling of DNA sequences, and uncertainties of Blastn algorithm.
-
-```
-========================================================================= test session starts =========================================================================
-platform linux2 -- Python 2.7.5 -- py-1.4.27 -- pytest-2.7.0 -- /usr/bin/python
-rootdir: /home/adrien/Programming/Python/Refeed/src, inifile: 
-collected 39 items 
-
-test_RefMasker.py::test_Sequence_create PASSED
-test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-110-0-0--0-0-0-0-] xfail
-test_RefMasker.py::test_Sequence_add_hit[100-seq_1-80-100-0-0--0-0-0-0-] xfail
-test_RefMasker.py::test_Sequence_add_hit[100-seq_0-80-90-20-30-ATCG-79-90-19-30-ATCG] PASSED
-test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-80-20-30-ATCG-79-90-19-30-CGAT] PASSED
-test_RefMasker.py::test_Sequence_add_hit[100-seq_0-80-90-30-20-ATCG-79-90-19-30-CGAT] PASSED
-test_RefMasker.py::test_Sequence_add_hit[100-seq_0-90-80-30-20-ATCG-79-90-19-30-ATCG] PASSED
-test_RefMasker.py::test_Sequence_output_sequence_1[100-1] PASSED
-test_RefMasker.py::test_Sequence_output_sequence_1[100-5] PASSED
-test_RefMasker.py::test_Sequence_output_sequence_1[200-10] PASSED
-test_RefMasker.py::test_Sequence_output_sequence_2 PASSED
-test_RefMasker.py::test_Reference_create[1-1000-1-False] PASSED
-test_RefMasker.py::test_Reference_create[1-1000-1-True] PASSED
-test_RefMasker.py::test_Reference_create[2-10000-2-False] PASSED
-test_RefMasker.py::test_Reference_create[2-10000-2-True] PASSED
-test_RefMasker.py::test_Reference_add_hit_list[1-1000-1] PASSED
-test_RefMasker.py::test_Reference_add_hit_list[2-10000-2] PASSED
-test_RefMasker.py::test_Reference_output_masked_reference PASSED
-pyBlast/test_pyBlast.py::test_BlastHit[36.9133828132-88-75-85-47-98-88-14-8.78046725086-92.5815421121] PASSED
-pyBlast/test_pyBlast.py::test_BlastHit[-1-19-100-17-17-54-53-33-79.1465130808-41.6977101708] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[65.8976266941--1-46-9-74-59-97-56-59.2270229149-93.0689987714] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[75.9701897823-71--1-26-16-91-16-82-5.78377016797-79.1291574854] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[80.9394959784-54-85--1-5-78-33-35-8.3011500976-53.4993883036] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[35.5821954158-26-23-29--1-69-35-57-47.706286329-4.1842760318] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[52.9290346724-31-3-44-74--1-30-76-36.6917151434-43.8870409292] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[16.7597390274-26-0-37-100-15--1-91-89.8637578655-63.9053323995] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[94.5094431806-49-70-48-9-39-80--1-72.722423521-98.7208732416] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[44.4349347822-84-83-96-49-59-16-9--1-91.9302274501] xfail
-pyBlast/test_pyBlast.py::test_BlastHit[77.9794166482-19-89-79-33-46-9-26-21.2569521087--1] xfail
-pyBlast/test_pyBlast.py::test_Blastn[blastn-Queries from Subject] PASSED
-pyBlast/test_pyBlast.py::test_Blastn[blastn-Random queries] xfail
-pyBlast/test_pyBlast.py::test_Blastn[blastn-short-Queries from Subject] PASSED
-pyBlast/test_pyBlast.py::test_Blastn[blastn-short-Random queries] xfail
-pyBlast/test_pyBlast.py::test_Blastn[dc-megablast-Queries from Subject] PASSED
-pyBlast/test_pyBlast.py::test_Blastn[dc-megablast-Random queries] xfail
-pyBlast/test_pyBlast.py::test_Blastn[megablast-Queries from Subject] PASSED
-pyBlast/test_pyBlast.py::test_Blastn[megablast-Random queries] xfail
-pyBlast/test_pyBlast.py::test_Blastn[rmblastn-Queries from Subject] PASSED
-pyBlast/test_pyBlast.py::test_Blastn[rmblastn-Random queries] xfail
-
-================================================================ 22 passed, 17 xfailed in 7.02 seconds ================================================================
 ```
 
 ## Authors and Contact
