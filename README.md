@@ -33,21 +33,33 @@ RefMasker is a **python3.8** object oriented script that was developed in order 
 
 ## Get and install
 
-Clone the repository using `git clone https://github.com/emlec/RefMasker.git`.
+Clone the repository using: 
+```
+git clone https://github.com/emlec/RefMasker.git
+```
 You may proceed using Singularity or Conda.
 
 ### Singularity
 
 * Please install Singularity, if not already installed.
-You can then build RefMasker container using `sudo singularity build refmasker singularity/Singularity.rcp`
+You can then build RefMasker container using:
+```
+sudo singularity build refmasker singularity/Singularity.rcp
+```
 
 * Refmasker can be used from within the container.
-To do so, start a shell in the container using `singularity shell refmasker`.
+To do so, start a shell in the container using:
+```
+singularity shell refmasker
+```
 
 ### Conda
 
 * Please install Conda, if not already installed.
-You can then create RefMasker conda environment using `conda env create -f conda/conda.yaml`
+You can then create RefMasker conda environment using:
+```
+conda env create -f conda/conda.yaml
+```
 
 * Activate the environment using `conda activate RefMasker`. You can then use RefMasker.
 
